@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Grid from '../components/Grid.vue'
+import TheGrid from '../components/TheGrid.vue'
 </script>
 
 <template>
   <main>
-    <Grid />
+    <TheGrid />
   </main>
 </template>
