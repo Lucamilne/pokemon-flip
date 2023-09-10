@@ -3,7 +3,7 @@ import TheGrid from '../components/TheGrid.vue'
 </script>
 
 <template>
-  <main>
+  <main class="container mx-auto">
     <TheGrid />
   </main>
 </template>
