@@ -1,42 +1,57 @@
-<script setup lang="ts">
-import { reactive } from 'vue'
-import { GridLayout, GridItem } from 'grid-layout-plus'
-
-const layout = reactive([
-  { x: 0, y: 0, w: 1, h: 1, i: 'A1', },
-  { x: 1, y: 0, w: 1, h: 1, i: 'A2', },
-  { x: 2, y: 0, w: 1, h: 1, i: 'A3', },
-  { x: 0, y: 1, w: 1, h: 1, i: 'B1', },
-  { x: 1, y: 1, w: 1, h: 1, i: 'B2', },
-  { x: 2, y: 1, w: 1, h: 1, i: 'B3', },
-  { x: 0, y: 2, w: 1, h: 1, i: 'C1', },
-  { x: 1, y: 2, w: 1, h: 1, i: 'C2', },
-  { x: 2, y: 2, w: 1, h: 1, i: 'C3', },
-])
-</script>
-
 <template>
-  <GridLayout v-model:layout="layout" :col-num="3" :max-rows="3" use-css-transforms>
-    <GridItem v-for="item in layout" :key="item.i" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :is-draggable="false">
-      <span>card goes here, set draggable to true</span>
-    </GridItem>
-  </GridLayout>
+  <div class="grid grid-cols-3 gap-4">
+    <draggable v-for="(content, cell) of grid" :key="cell" :list="grid[cell]" group="people" @change="log" itemKey="name" class="aspect-square border border-red-200">
+      <template #item="{ element, index }">
+        <div class="list-group-item">{{ element.name }} {{ index }}</div>
+      </template>
+    </draggable>
+  </div>
 </template>
+<script lang="ts">
+import draggable from "vuedraggable";
 
-<style scoped>
-.vgl-layout {
-  background-color: #eee;
-}
+export default {
+  name: "two-lists",
+  display: "Two Lists",
+  order: 1,
+  components: {
+    draggable
+  },
+  data() {
+    return {
+      grid: {
+        A1: [
+          { name: "Pikachu", id: 1 },
+        ],
+        A2: [],
+        A3: [],
+        B1: [],
+        B2: [],
+        B3: [],
+        C1: [],
+        C2: [
+          { name: "Raichu", id: 2 },
+        ],
+        C3: []
+      }
 
-:deep(.vgl-item:not(.vgl-item--placeholder)) {
-  border: 1px solid black;
-}
-
-/* :deep(.vgl-item--resizing) {
-  opacity: 90%;
-}
-
-:deep(.vgl-item--static) {
-  background-color: #cce;
-} */
-</style>
+    };
+  },
+  methods: {
+    // add: function () {
+    //   this.list.push({ name: "Juan" });
+    // },
+    // replace: function () {
+    //   this.list = [{ name: "Edgard" }];
+    // },
+    // clone: function (el) {
+    //   return {
+    //     name: el.name + " cloned"
+    //   };
+    // },
+    log(event) {
+      console.log(event);
+    }
+  }
+};
+</script>
