@@ -44,7 +44,7 @@ export default {
       for (const cell in this.grid) {
         if (this.grid[cell].length > 1) {
           // If a cell contains more than one item, keep only the first item (remove the rest).
-          this.grid[cell] = [this.grid[cell][0]];
+          this.grid[cell] = [this.grid[cell][0]]; //to do 
         }
       }
     }
