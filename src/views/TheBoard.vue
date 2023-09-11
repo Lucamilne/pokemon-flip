@@ -4,6 +4,10 @@ import TheGrid from '../components/TheGrid.vue'
 
 <template>
   <main class="container mx-auto">
-    <TheGrid />
+    <section class="grid grid-cols-3">
+      <div></div>
+      <TheGrid />
+      <div></div>
+    </section>
   </main>
 </template>
