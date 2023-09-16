@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div class="grid grid-cols-3 gap-4" ref="gridCells">
-      <div v-for="(value, key) in cells" :key="key" class="dropzone border aspect-square border-gray-800" >
-        <div class="card bg-green-200 block m-4 aspect-square">{{ key }}</div>
+    <div class="grid grid-cols-3" ref="gridCells">
+      <div v-for="(value, key) in cells" :key="key" class="dropzone border border-4 border-gray-400 aspect-square border-gray-800" >
+        <Card />
       </div>
     </div>
   </section>
@@ -11,8 +11,9 @@
 <script setup>
 import { Draggable, Droppable } from '@shopify/draggable';
 import { ref, onMounted } from 'vue';
+import Card from './Card.vue'
+
 const gridCells = ref([]);
-const card = ref(null);
 
 const cells = {
   A1: {},
@@ -31,6 +32,8 @@ onMounted(() => {
     draggable: '.card',
     dropzone: '.dropzone'
   });
+
+  // get width/height of element on drag and fix
   
   droppable.on('droppable:dropped', () => console.log('droppable:dropped'));
   droppable.on('droppable:returned', () => console.log('droppable:returned'));
