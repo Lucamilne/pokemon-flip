@@ -1,8 +1,8 @@
 <template>
   <section>
     <div class="grid grid-cols-3" ref="gridCells">
-      <div v-for="(value, key) in cells" :key="key" class="dropzone border border-4 border-gray-400 aspect-square border-gray-800" >
-        <Card />
+      <div v-for="(value, key) in cells" :key="key" class="dropzone border border-4 border-gray-400 aspect-square border-gray-800">
+        <Card v-if="value.hasValue" />
       </div>
     </div>
   </section>
@@ -16,26 +16,56 @@ import Card from './Card.vue'
 const gridCells = ref([]);
 
 const cells = {
-  A1: {},
-  A2: {},
-  A3: {},
-  B1: {},
-  B2: {},
-  B3: {},
-  C1: {},
-  C2: {},
-  C3: {},
+  A1: {
+    hasValue: true
+  },
+  A2: {
+    hasValue: true
+  },
+  A3: {
+    hasValue: true
+  },
+  B1: {
+    hasValue: true
+  },
+  B2: {
+    hasValue: false
+  },
+  B3: {
+    hasValue: false
+  },
+  C1: {
+    hasValue: false
+  },
+  C2: {
+    hasValue: false
+  },
+  C3: {
+    hasValue: false
+  },
 }
 
 onMounted(() => {
   const droppable = new Droppable(gridCells.value, {
     draggable: '.card',
-    dropzone: '.dropzone'
+    dropzone: '.dropzone',
+    mirror: {
+      constrainDimensions: true, // keeps the card aspect ratio
+    },
   });
 
-  // get width/height of element on drag and fix
-  
-  droppable.on('droppable:dropped', () => console.log('droppable:dropped'));
-  droppable.on('droppable:returned', () => console.log('droppable:returned'));
+  // let droppableOrigin;
+
+  // droppable.on('drag:start', (event) => {
+  //   droppableOrigin = event.originalSource.parentNode;
+  // });
+
+  droppable.on('droppable:dropped', (event) => {
+    if (event.dropzone.children.length > 0) {
+      event.cancel();
+    }
+  });
 })
+
+
 </script>
