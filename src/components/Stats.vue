@@ -1,5 +1,5 @@
 <template>
-    <section class="w-1/4 text-6xl">
+    <section class="w-1/4 text-6xl text-white">
         <div class="text-center">{{ values[1] }}</div>
         <div class="flex justify-center">
             <div>{{ values[0] }}</div>
