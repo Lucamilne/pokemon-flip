@@ -1,11 +1,12 @@
 <template>
   <main class="mx-auto sm:w-full md:w-1/2">
-    <TheGrid />
+    <TheGrid :cards-to-deal="cardsToDeal" />
   </main>
 </template>
 
 <script>
-import TheGrid from '../components/TheGrid.vue'
+import TheGrid from '../components/TheGrid.vue';
+import pokemon from "@/assets/data/pokemon-species.js";
 
 export default {
   name: 'TheBoard',
@@ -13,23 +14,14 @@ export default {
     TheGrid
   },
   data: () => ({
-    pokemonSpecies: []
+    cardsToDeal: []
   }),
   mounted() {
-    fetch('https://pokeapi.co/api/v2/generation/1')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Parse the response body as JSON
-      })
-      .then(data => {
-        console.log(data.pokemon_species.map(p => p.name))
-        this.pokemonSpecies = data.pokemon_species;
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
+    const arrayOfPokemon = Object.keys(pokemon.data);
+    const shuffledArray = arrayOfPokemon.slice().sort(() => Math.random() - 0.5).map(pokemonName => ({ name: pokemonName, ...pokemon.data[pokemonName] }));
+    const firstArray = shuffledArray.slice(0, 5);
+    const secondArray = shuffledArray.slice(5, 10);
+    this.cardsToDeal = [firstArray, secondArray];
   }
 }
 
