@@ -1,14 +1,15 @@
 <template>
-    <div class="relative card rounded-lg border border-[1.5rem] border-yellow-500 m-4 aspect-square">
-        <div class="content-border-wrap w-full aspect-square p-1">
-        <div class="content"></div>
+    <div class="card rounded-md p-3 content-border-wrap aspect-square shadow-md">
+        <div :class="`bg-yellow-600 relative w-full aspect-square p-1 shadow-inner`">
+            <div class="content"></div>
+            <Stats :values="[1, 2, 3, 4]" />
         </div>
-        <Stats class="absolute top-0 left-0" :values="[1, 2, 3, 4]" />
     </div>
 </template>
 
 <script setup>
 import Stats from './Stats.vue';
+import { ref } from 'vue';
 
 const colorByElement = { //todo shades of each element
     'grass': 'lime',
@@ -19,10 +20,12 @@ const colorByElement = { //todo shades of each element
     'fighting': 'orange',
     'normal': 'neutral'
 }
+
+const chosenColor = ref(colorByElement['grass']);
 </script>
 
 <style scoped>
 .content-border-wrap {
-   @apply bg-gradient-to-br from-yellow-600 to-yellow-500;
+    @apply bg-gradient-to-br from-yellow-500 to-yellow-600;
 }
 </style>

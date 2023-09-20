@@ -1,11 +1,13 @@
 <template>
-    <section class="w-1/4 text-6xl text-white">
-        <div class="text-center">{{ values[1] }}</div>
-        <div class="flex justify-center">
-            <div>{{ values[0] }}</div>
-            <div>{{ values[2] }}</div>
+    <section class="absolute top-0 left-0 w-full">
+        <div class="text-4xl text-white flex flex-col justify-between aspect-square text-center select-none">
+            <div>{{ values[1] }}</div>
+            <div class="flex justify-between">
+                <div class="w-10">{{ values[0] }}</div>
+                <div class="w-10">{{ values[2] }}</div>
+            </div>
+            <div>{{ values[3] }}</div>
         </div>
-        <div class="text-center">{{ values[3] }}</div>
     </section>
 </template>
 

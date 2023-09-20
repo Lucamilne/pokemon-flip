@@ -2,7 +2,7 @@
   <section>
     {{ cellBeingDragged }}
     <div class="grid grid-cols-3" ref="gridCells">
-      <div v-for="(value, key) in cells" :key="key" :class="`dropzone border border-4 border-zinc-400 aspect-square ${value.class}`">
+      <div v-for="(value, key) in cells" :key="key" :class="`dropzone border border-4 border-zinc-400 aspect-square p-2 ${value.class}`">
         <Card v-if="value.hasValue" :id="key" />
       </div>
     </div>
