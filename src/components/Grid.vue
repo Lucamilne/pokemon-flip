@@ -1,21 +1,39 @@
 <template>
   <section>
-    {{ cellBeingDragged }}
-    <div class="grid grid-cols-3" ref="gridCells">
-      <div v-for="(value, key) in cells" :key="key" :class="`dropzone border border-4 border-zinc-400 aspect-square p-2 ${value.class}`">
-        <Card v-if="value.hasValue" :id="key" />
+    <div class="grid grid-cols-3 aspect-square" ref="gridCells">
+      <div v-for="(value, key) in cells" :key="key" :class="`dropzone border border-4 border-black p-2 ${value.class}`">
       </div>
     </div>
   </section>
+  <!-- 
+  <div class="nes-table-responsive">
+    <table class="nes-table is-bordered aspect-square">
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
 </template>
 
 <script setup>
 import { Draggable, Droppable } from '@shopify/draggable';
 import { ref, onMounted } from 'vue';
-import Card from './Card.vue'
 
 const gridCells = ref([]);
-const cellBeingDragged = ref(null);
 
 const cells = {
   A1: {
@@ -76,7 +94,7 @@ onMounted(() => {
   // manipulate mirror of dragged card
   droppable.on('mirror:create', (event) => {
     const mirror = event.data.source;
-    mirror.classList.add('z-50'); 
+    mirror.classList.add('z-50');
   });
 
   droppable.on('droppable:dropped', (event) => {
