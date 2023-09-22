@@ -1,37 +1,14 @@
 <template>
   <section>
-    <div class="grid grid-cols-3 aspect-square" ref="gridCells">
-      <div v-for="(value, key) in cells" :key="key" :class="`dropzone border border-4 border-black p-2 ${value.class}`">
+    <div class="grid shadow grid-cols-3 gap-2 aspect-square cells">
+      <div v-for="(value, key) in cells" :key="key" class="dropzone bg-white/75 border border-4 border-black p-2">
       </div>
     </div>
   </section>
-  <!-- 
-  <div class="nes-table-responsive">
-    <table class="nes-table is-bordered aspect-square">
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div> -->
 </template>
 
 <script setup>
-import { Draggable, Droppable } from '@shopify/draggable';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 const gridCells = ref([]);
 
@@ -73,36 +50,6 @@ const cells = {
     class: '',
   },
 }
-
-onMounted(() => {
-  const droppable = new Droppable(gridCells.value, {
-    draggable: '.card',
-    dropzone: '.dropzone',
-    mirror: {
-      constrainDimensions: true, // keeps the card aspect ratio
-    },
-  });
-
-  droppable.on('drag:start', (event) => {
-    //
-  });
-
-  droppable.on('drag:stop', (event) => {
-    //
-  });
-
-  // manipulate mirror of dragged card
-  droppable.on('mirror:create', (event) => {
-    const mirror = event.data.source;
-    mirror.classList.add('z-50');
-  });
-
-  droppable.on('droppable:dropped', (event) => {
-    if (event.dropzone.children.length > 0) {
-      event.cancel();
-    }
-  });
-})
 </script>
 
 <style scoped>

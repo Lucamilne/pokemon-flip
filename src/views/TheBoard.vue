@@ -1,8 +1,8 @@
 <template>
-  <main class="h-screen flex justify-between items-center mx-4">
-    <Hand :cards="cardsToDeal[0]" class="basis-44"/>
+  <main class="h-screen flex justify-between items-center px-4 bg-[url('@/assets/textures/background.png')] bg-center bg-cover">
+    <Hand :cards="cardsToDeal[0]" class="basis-44" :isPlayerHand="true" />
     <Grid class="basis-1/2" />
-    <Hand :cards="cardsToDeal[1]"  class="basis-44" />
+    <Hand :cards="cardsToDeal[1]" class="basis-44" :isPlayerHand="false" />
   </main>
 </template>
 
@@ -10,6 +10,7 @@
 import Grid from '../components/Grid.vue';
 import Hand from '../components/Hand.vue';
 import pokemon from "@/assets/data/pokemon-species.js";
+import { Plugins, Droppable } from '@shopify/draggable';
 
 export default {
   name: 'TheBoard',
@@ -24,8 +25,8 @@ export default {
     setRandomCards() {
       const arrayOfPokemon = Object.keys(pokemon.data);
       const shuffledArray = arrayOfPokemon.slice().sort(() => Math.random() - 0.5);
-      const firstArray = shuffledArray.slice(0, 5).map(pokemonName => ({ name: pokemonName, type: pokemon.data[pokemonName].type, id: pokemon.data[pokemonName].id, stats: this.allocateStatsByPokemon(pokemonName) }));
-      const secondArray = shuffledArray.slice(5, 10).map(pokemonName => ({ name: pokemonName, type: pokemon.data[pokemonName].type, id: pokemon.data[pokemonName].id, stats: this.allocateStatsByPokemon(pokemonName) }));
+      const firstArray = shuffledArray.slice(0, 5).map(pokemonName => ({ name: pokemonName, types: pokemon.data[pokemonName].types, id: pokemon.data[pokemonName].id, stats: this.allocateStatsByPokemon(pokemonName) }));
+      const secondArray = shuffledArray.slice(5, 10).map(pokemonName => ({ name: pokemonName, types: pokemon.data[pokemonName].types, id: pokemon.data[pokemonName].id, stats: this.allocateStatsByPokemon(pokemonName) }));
       this.cardsToDeal = [firstArray, secondArray];
     },
     randomVariance(variance) {
@@ -60,6 +61,42 @@ export default {
   },
   mounted() {
     this.setRandomCards();
+
+    // const cells = document.querySelectorAll('.cells');
+    this.$nextTick(() => {
+      const cells = document.querySelectorAll('.cells');
+
+      const droppable = new Droppable(cells, {
+        draggable: '.card',
+        dropzone: '.dropzone',
+        mirror: {
+          constrainDimensions: true, // keeps the card aspect ratio
+          appendTo: 'body',
+        },
+        plugins: [Plugins.ResizeMirror],
+      });
+
+      droppable.on('drag:start', (event) => {
+        //
+      });
+
+      droppable.on('drag:stop', (event) => {
+        //
+      });
+
+      // manipulate mirror of dragged card
+      droppable.on('mirror:create', (event) => {
+        const mirror = event.data.source;
+        mirror.classList.add('z-50');
+      });
+
+      // droppable.on('droppable:dropped', (event) => {
+      //   if (event.dropzone.children.length > 0) {
+      //     event.cancel();
+      //   }
+      // });
+    });
+
   }
 }
 
