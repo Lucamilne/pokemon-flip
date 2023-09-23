@@ -1,1435 +1,1280 @@
 let pokemon = {};
 
-pokemon.statAllocations = [10, 12, 14, 15, 16, 18, 20, 23, 26, 29];
-
-// variance = range of stats that the pokemon has a chance to be randomly added or subtracted
-// handicap = number of stats always added to the pokemons stat allocation
 pokemon.data = {
     "bulbasaur": {
-        "tier": 5,
-        "variance": 3,
-        "handicap": -2,
         "id": 1,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 318,
+        "effort_value": 1
     },
     "charmander": {
-        "tier": 5,
-        "variance": 0,
-        "handicap": 2,
         "id": 4,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 309,
+        "effort_value": 1
     },
     "squirtle": {
-        "tier": 5,
-        "variance": 1,
-        "handicap": 0,
         "id": 7,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 314,
+        "effort_value": 1
     },
     "caterpie": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 10,
         "types": [
             "bug"
-        ]
+        ],
+        "stats": 195,
+        "effort_value": 1
     },
     "weedle": {
-        "tier": 1,
-        "variance": 1,
-        "handicap": 0,
         "id": 13,
         "types": [
             "bug",
             "poison"
-        ]
+        ],
+        "stats": 195,
+        "effort_value": 1
     },
     "pidgey": {
-        "tier": 2,
-        "variance": 0,
-        "handicap": 0,
         "id": 16,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 251,
+        "effort_value": 1
     },
     "rattata": {
-        "tier": 2,
-        "variance": 0,
-        "handicap": 0,
         "id": 19,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 253,
+        "effort_value": 1
     },
     "spearow": {
-        "tier": 3,
-        "variance": 0,
-        "handicap": 0,
         "id": 21,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 262,
+        "effort_value": 1
     },
     "ekans": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 23,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 288,
+        "effort_value": 1
     },
     "sandshrew": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 27,
         "types": [
             "ground"
-        ]
+        ],
+        "stats": 300,
+        "effort_value": 1
     },
     "nidoran-f": {
-        "tier": 5,
-        "variance": 0,
-        "handicap": -2,
         "id": 29,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 275,
+        "effort_value": 1
     },
     "nidoran-m": {
-        "tier": 5,
-        "variance": 2,
-        "handicap": 0,
         "id": 32,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 273,
+        "effort_value": 1
     },
     "vulpix": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 2,
         "id": 37,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 299,
+        "effort_value": 1
     },
     "zubat": {
-        "tier": 3,
-        "variance": 2,
-        "handicap": 0,
         "id": 41,
         "types": [
             "poison",
             "flying"
-        ]
+        ],
+        "stats": 245,
+        "effort_value": 1
     },
     "oddish": {
-        "tier": 4,
-        "variance": 3,
-        "handicap": -2,
         "id": 43,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 320,
+        "effort_value": 1
     },
     "paras": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": -1,
         "id": 46,
         "types": [
             "bug",
             "grass"
-        ]
+        ],
+        "stats": 285,
+        "effort_value": 1
     },
     "venonat": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": -2,
         "id": 48,
         "types": [
             "bug",
             "poison"
-        ]
+        ],
+        "stats": 305,
+        "effort_value": 1
     },
     "diglett": {
-        "tier": 2,
-        "variance": 1,
-        "handicap": 0,
         "id": 50,
         "types": [
             "ground"
-        ]
+        ],
+        "stats": 265,
+        "effort_value": 1
     },
     "meowth": {
-        "tier": 5,
-        "variance": 4,
-        "handicap": -1,
         "id": 52,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 290,
+        "effort_value": 1
     },
     "psyduck": {
-        "tier": 4,
-        "variance": 2,
-        "handicap": -2,
         "id": 54,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 320,
+        "effort_value": 1
     },
     "mankey": {
-        "tier": 4,
-        "variance": 2,
-        "handicap": 0,
         "id": 56,
         "types": [
             "fighting"
-        ]
+        ],
+        "stats": 305,
+        "effort_value": 1
     },
     "growlithe": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 2,
         "id": 58,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 350,
+        "effort_value": 1
     },
     "poliwag": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 60,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 300,
+        "effort_value": 1
     },
     "abra": {
-        "tier": 4,
-        "variance": 5,
-        "handicap": -3,
         "id": 63,
         "types": [
             "psychic"
-        ]
+        ],
+        "stats": 310,
+        "effort_value": 1
     },
     "machop": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 1,
         "id": 66,
         "types": [
             "fighting"
-        ]
+        ],
+        "stats": 305,
+        "effort_value": 1
     },
     "bellsprout": {
-        "tier": 4,
-        "variance": 2,
-        "handicap": -2,
         "id": 69,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 300,
+        "effort_value": 1
     },
     "tentacool": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 72,
         "types": [
             "water",
             "poison"
-        ]
+        ],
+        "stats": 335,
+        "effort_value": 1
     },
     "geodude": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 1,
         "id": 74,
         "types": [
             "rock",
             "ground"
-        ]
+        ],
+        "stats": 300,
+        "effort_value": 1
     },
     "ponyta": {
-        "tier": 4,
-        "variance": 2,
-        "handicap": 2,
         "id": 77,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 410,
+        "effort_value": 1
     },
     "slowpoke": {
-        "tier": 4,
-        "variance": 6,
-        "handicap": -5,
         "id": 79,
         "types": [
             "water",
             "psychic"
-        ]
+        ],
+        "stats": 315,
+        "effort_value": 1
     },
     "magnemite": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 1,
         "id": 81,
         "types": [
             "electric",
             "steel"
-        ]
+        ],
+        "stats": 325,
+        "effort_value": 1
     },
     "farfetchd": {
-        "tier": 6,
-        "variance": 4,
-        "handicap": 0,
         "id": 83,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 377,
+        "effort_value": 1
     },
     "doduo": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": -2,
         "id": 84,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 310,
+        "effort_value": 1
     },
     "seel": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 86,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 325,
+        "effort_value": 1
     },
     "grimer": {
-        "tier": 4,
-        "variance": 2,
-        "handicap": 0,
         "id": 88,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 325,
+        "effort_value": 1
     },
     "shellder": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 90,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 305,
+        "effort_value": 1
     },
     "gastly": {
-        "tier": 4,
-        "variance": 2,
-        "handicap": -1,
         "id": 92,
         "types": [
             "ghost",
             "poison"
-        ]
+        ],
+        "stats": 310,
+        "effort_value": 1
     },
     "onix": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 3,
         "id": 95,
         "types": [
             "rock",
             "ground"
-        ]
+        ],
+        "stats": 385,
+        "effort_value": 1
     },
     "drowzee": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 1,
         "id": 96,
         "types": [
             "psychic"
-        ]
+        ],
+        "stats": 328,
+        "effort_value": 1
     },
     "krabby": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": -1,
         "id": 98,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 325,
+        "effort_value": 1
     },
     "voltorb": {
-        "tier": 4,
-        "variance": 3,
-        "handicap": 0,
         "id": 100,
         "types": [
             "electric"
-        ]
+        ],
+        "stats": 330,
+        "effort_value": 1
     },
     "exeggcute": {
-        "tier": 4,
-        "variance": 4,
-        "handicap": -2,
         "id": 102,
         "types": [
             "grass",
             "psychic"
-        ]
+        ],
+        "stats": 325,
+        "effort_value": 1
     },
     "cubone": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 0,
         "id": 104,
         "types": [
             "ground"
-        ]
+        ],
+        "stats": 320,
+        "effort_value": 1
     },
     "lickitung": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": 3,
         "id": 108,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 385,
+        "effort_value": 2
     },
     "koffing": {
-        "tier": 4,
-        "variance": 2,
-        "handicap": -1,
         "id": 109,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 340,
+        "effort_value": 1
     },
     "rhyhorn": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 3,
         "id": 111,
         "types": [
             "ground",
             "rock"
-        ]
+        ],
+        "stats": 345,
+        "effort_value": 1
     },
     "tangela": {
-        "tier": 6,
-        "variance": 2,
-        "handicap": -1,
         "id": 114,
         "types": [
             "grass"
-        ]
+        ],
+        "stats": 435,
+        "effort_value": 1
     },
     "kangaskhan": {
-        "tier": 8,
-        "variance": 0,
-        "handicap": 0,
         "id": 115,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 2
     },
     "horsea": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 116,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 295,
+        "effort_value": 1
     },
     "goldeen": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 0,
         "id": 118,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 320,
+        "effort_value": 1
     },
     "staryu": {
-        "tier": 4,
-        "variance": 1,
-        "handicap": 1,
         "id": 120,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 340,
+        "effort_value": 1
     },
     "scyther": {
-        "tier": 8,
-        "variance": 2,
-        "handicap": -2,
         "id": 123,
         "types": [
             "bug",
             "flying"
-        ]
+        ],
+        "stats": 500,
+        "effort_value": 1
     },
     "pinsir": {
-        "tier": 8,
-        "variance": 2,
-        "handicap": -2,
         "id": 127,
         "types": [
             "bug"
-        ]
+        ],
+        "stats": 500,
+        "effort_value": 2
     },
     "tauros": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": 2,
         "id": 128,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 2
     },
     "magikarp": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": -6,
         "id": 129,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 200,
+        "effort_value": 1
     },
     "lapras": {
-        "tier": 8,
-        "variance": 1,
-        "handicap": -1,
         "id": 131,
         "types": [
             "water",
             "ice"
-        ]
+        ],
+        "stats": 535,
+        "effort_value": 2
     },
     "ditto": {
-        "tier": 8,
-        "variance": 8,
-        "handicap": -8,
         "id": 132,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 288,
+        "effort_value": 1
     },
     "eevee": {
-        "tier": 5,
-        "variance": 0,
-        "handicap": 0,
         "id": 133,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 325,
+        "effort_value": 1
     },
     "porygon": {
-        "tier": 8,
-        "variance": 4,
-        "handicap": -4,
         "id": 137,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 395,
+        "effort_value": 1
     },
     "omanyte": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 138,
         "types": [
             "rock",
             "water"
-        ]
+        ],
+        "stats": 355,
+        "effort_value": 1
     },
     "kabuto": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 0,
         "id": 140,
         "types": [
             "rock",
             "water"
-        ]
+        ],
+        "stats": 355,
+        "effort_value": 1
     },
     "aerodactyl": {
-        "tier": 9,
-        "variance": 0,
-        "handicap": -2,
         "id": 142,
         "types": [
             "rock",
             "flying"
-        ]
+        ],
+        "stats": 515,
+        "effort_value": 2
     },
     "articuno": {
-        "tier": 10,
-        "variance": 2,
-        "handicap": -2,
         "id": 144,
         "types": [
             "ice",
             "flying"
-        ]
+        ],
+        "stats": 580,
+        "effort_value": 3
     },
     "zapdos": {
-        "tier": 10,
-        "variance": 3,
-        "handicap": -3,
         "id": 145,
         "types": [
             "electric",
             "flying"
-        ]
+        ],
+        "stats": 580,
+        "effort_value": 3
     },
     "moltres": {
-        "tier": 10,
-        "variance": 1,
-        "handicap": -1,
         "id": 146,
         "types": [
             "fire",
             "flying"
-        ]
+        ],
+        "stats": 580,
+        "effort_value": 3
     },
     "dratini": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": -2,
         "id": 147,
         "types": [
             "dragon"
-        ]
+        ],
+        "stats": 300,
+        "effort_value": 1
     },
     "mewtwo": {
-        "tier": 10,
-        "variance": 2,
-        "handicap": -2,
         "id": 150,
         "types": [
             "psychic"
-        ]
+        ],
+        "stats": 680,
+        "effort_value": 3
     },
     "mew": {
-        "tier": 10,
-        "variance": 0,
-        "handicap": 0,
         "id": 151,
         "types": [
             "psychic"
-        ]
+        ],
+        "stats": 600,
+        "effort_value": 3
     },
     "ivysaur": {
-        "tier": 7,
-        "variance": 3,
-        "handicap": -2,
         "id": 2,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 405,
+        "effort_value": 2
     },
     "venusaur": {
-        "tier": 9,
-        "variance": 4,
-        "handicap": -3,
         "id": 3,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 525,
+        "effort_value": 3
     },
     "charmeleon": {
-        "tier": 7,
-        "variance": 0,
-        "handicap": 2,
         "id": 5,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 405,
+        "effort_value": 2
     },
     "charizard": {
-        "tier": 9,
-        "variance": 0,
-        "handicap": 0,
         "id": 6,
         "types": [
             "fire",
             "flying"
-        ]
+        ],
+        "stats": 534,
+        "effort_value": 3
     },
     "wartortle": {
-        "tier": 7,
-        "variance": 1,
-        "handicap": -1,
         "id": 8,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 405,
+        "effort_value": 2
     },
     "blastoise": {
-        "tier": 9,
-        "variance": 1,
-        "handicap": -2,
         "id": 9,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 530,
+        "effort_value": 3
     },
     "metapod": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": -4,
         "id": 11,
         "types": [
             "bug"
-        ]
+        ],
+        "stats": 205,
+        "effort_value": 2
     },
     "butterfree": {
-        "tier": 9,
-        "variance": 0,
-        "handicap": -8,
         "id": 12,
         "types": [
             "bug",
             "flying"
-        ]
+        ],
+        "stats": 395,
+        "effort_value": 3
     },
     "kakuna": {
-        "tier": 6,
-        "variance": 1,
-        "handicap": -4,
         "id": 14,
         "types": [
             "bug",
             "poison"
-        ]
+        ],
+        "stats": 205,
+        "effort_value": 2
     },
     "beedrill": {
-        "tier": 9,
-        "variance": 1,
-        "handicap": -8,
         "id": 15,
         "types": [
             "bug",
             "poison"
-        ]
+        ],
+        "stats": 395,
+        "effort_value": 3
     },
     "pidgeotto": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": -1,
         "id": 17,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 349,
+        "effort_value": 2
     },
     "pidgeot": {
-        "tier": 9,
-        "variance": 0,
-        "handicap": -4,
         "id": 18,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 479,
+        "effort_value": 3
     },
     "raticate": {
-        "tier": 6,
-        "variance": 2,
-        "handicap": 2,
         "id": 20,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 413,
+        "effort_value": 2
     },
     "fearow": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": 2,
         "id": 22,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 442,
+        "effort_value": 2
     },
     "arbok": {
-        "tier": 6,
-        "variance": 2,
-        "handicap": 0,
         "id": 24,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 448,
+        "effort_value": 2
     },
     "pikachu": {
-        "tier": 5,
-        "variance": 0,
-        "handicap": 0,
         "id": 25,
         "types": [
             "electric"
-        ]
+        ],
+        "stats": 320,
+        "effort_value": 2
     },
     "raichu": {
-        "tier": 7,
-        "variance": 0,
-        "handicap": 2,
         "id": 26,
         "types": [
             "electric"
-        ]
+        ],
+        "stats": 485,
+        "effort_value": 3
     },
     "sandslash": {
-        "tier": 7,
-        "variance": 0,
-        "handicap": 0,
         "id": 28,
         "types": [
             "ground"
-        ]
+        ],
+        "stats": 450,
+        "effort_value": 2
     },
     "nidorina": {
-        "tier": 6,
-        "variance": 0,
-        "handicap": -2,
         "id": 30,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 365,
+        "effort_value": 2
     },
     "nidoqueen": {
-        "tier": 9,
-        "variance": 0,
-        "handicap": -2,
         "id": 31,
         "types": [
             "poison",
             "ground"
-        ]
+        ],
+        "stats": 505,
+        "effort_value": 3
     },
     "nidorino": {
-        "tier": 6,
-        "variance": 2,
-        "handicap": 0,
         "id": 33,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 365,
+        "effort_value": 2
     },
     "nidoking": {
-        "tier": 9,
-        "variance": 1,
-        "handicap": -3,
         "id": 34,
         "types": [
             "poison",
             "ground"
-        ]
+        ],
+        "stats": 505,
+        "effort_value": 3
     },
     "clefairy": {
-        "tier": 6,
-        "variance": 3,
-        "handicap": 0,
         "id": 35,
         "types": [
             "fairy"
-        ]
+        ],
+        "stats": 323,
+        "effort_value": 2
     },
     "clefable": {
-        "tier": 7,
-        "variance": 4,
-        "handicap": 1,
         "id": 36,
         "types": [
             "fairy"
-        ]
+        ],
+        "stats": 483,
+        "effort_value": 3
     },
     "ninetales": {
-        "tier": 7,
-        "variance": 0,
-        "handicap": 1,
         "id": 38,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 505,
+        "effort_value": 2
     },
     "jigglypuff": {
-        "tier": 4,
-        "variance": 0,
-        "handicap": 1,
         "id": 39,
         "types": [
             "normal",
             "fairy"
-        ]
+        ],
+        "stats": 270,
+        "effort_value": 2
     },
     "wigglytuff": {
-        "tier": 7,
-        "variance": 1,
-        "handicap": 0,
         "id": 40,
         "types": [
             "normal",
             "fairy"
-        ]
+        ],
+        "stats": 435,
+        "effort_value": 3
     },
     "golbat": {
-        "tier": 7,
-        "variance": 2,
-        "handicap": -2,
         "id": 42,
         "types": [
             "poison",
             "flying"
-        ]
+        ],
+        "stats": 455,
+        "effort_value": 2
     },
     "gloom": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 44,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 395,
+        "effort_value": 2
     },
     "vileplume": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 45,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 3
     },
     "parasect": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 47,
         "types": [
             "bug",
             "grass"
-        ]
+        ],
+        "stats": 405,
+        "effort_value": 3
     },
     "venomoth": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 49,
         "types": [
             "bug",
             "poison"
-        ]
+        ],
+        "stats": 450,
+        "effort_value": 2
     },
     "dugtrio": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 51,
         "types": [
             "ground"
-        ]
+        ],
+        "stats": 425,
+        "effort_value": 2
     },
     "persian": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 53,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 440,
+        "effort_value": 2
     },
     "golduck": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 55,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 500,
+        "effort_value": 2
     },
     "primeape": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 57,
         "types": [
             "fighting"
-        ]
+        ],
+        "stats": 455,
+        "effort_value": 2
     },
     "arcanine": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 59,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 555,
+        "effort_value": 2
     },
     "poliwhirl": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 61,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 385,
+        "effort_value": 2
     },
     "poliwrath": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 62,
         "types": [
             "water",
             "fighting"
-        ]
+        ],
+        "stats": 510,
+        "effort_value": 3
     },
     "kadabra": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 64,
         "types": [
             "psychic"
-        ]
+        ],
+        "stats": 400,
+        "effort_value": 2
     },
     "alakazam": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 65,
         "types": [
             "psychic"
-        ]
+        ],
+        "stats": 500,
+        "effort_value": 3
     },
     "machoke": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 67,
         "types": [
             "fighting"
-        ]
+        ],
+        "stats": 405,
+        "effort_value": 2
     },
     "machamp": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 68,
         "types": [
             "fighting"
-        ]
+        ],
+        "stats": 505,
+        "effort_value": 3
     },
     "weepinbell": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 70,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 390,
+        "effort_value": 2
     },
     "victreebel": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 71,
         "types": [
             "grass",
             "poison"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 3
     },
     "tentacruel": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 73,
         "types": [
             "water",
             "poison"
-        ]
+        ],
+        "stats": 515,
+        "effort_value": 2
     },
     "graveler": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 75,
         "types": [
             "rock",
             "ground"
-        ]
+        ],
+        "stats": 390,
+        "effort_value": 2
     },
     "golem": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 76,
         "types": [
             "rock",
             "ground"
-        ]
+        ],
+        "stats": 495,
+        "effort_value": 3
     },
     "rapidash": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 78,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 500,
+        "effort_value": 2
     },
     "slowbro": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 80,
         "types": [
             "water",
             "psychic"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 2
     },
     "magneton": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 82,
         "types": [
             "electric",
             "steel"
-        ]
+        ],
+        "stats": 465,
+        "effort_value": 2
     },
     "dodrio": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 85,
         "types": [
             "normal",
             "flying"
-        ]
+        ],
+        "stats": 470,
+        "effort_value": 2
     },
     "dewgong": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 87,
         "types": [
             "water",
             "ice"
-        ]
+        ],
+        "stats": 475,
+        "effort_value": 2
     },
     "muk": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 89,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 500,
+        "effort_value": 2
     },
     "cloyster": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 91,
         "types": [
             "water",
             "ice"
-        ]
+        ],
+        "stats": 525,
+        "effort_value": 2
     },
     "haunter": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 93,
         "types": [
             "ghost",
             "poison"
-        ]
+        ],
+        "stats": 405,
+        "effort_value": 2
     },
     "gengar": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 94,
         "types": [
             "ghost",
             "poison"
-        ]
+        ],
+        "stats": 500,
+        "effort_value": 3
     },
     "hypno": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 97,
         "types": [
             "psychic"
-        ]
+        ],
+        "stats": 483,
+        "effort_value": 2
     },
     "kingler": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 99,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 475,
+        "effort_value": 2
     },
     "electrode": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 101,
         "types": [
             "electric"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 2
     },
     "exeggutor": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 103,
         "types": [
             "grass",
             "psychic"
-        ]
+        ],
+        "stats": 530,
+        "effort_value": 2
     },
     "marowak": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 105,
         "types": [
             "ground"
-        ]
+        ],
+        "stats": 425,
+        "effort_value": 2
     },
     "hitmonlee": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 106,
         "types": [
             "fighting"
-        ]
+        ],
+        "stats": 455,
+        "effort_value": 2
     },
     "hitmonchan": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 107,
         "types": [
             "fighting"
-        ]
+        ],
+        "stats": 455,
+        "effort_value": 2
     },
     "weezing": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 110,
         "types": [
             "poison"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 2
     },
     "rhydon": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 112,
         "types": [
             "ground",
             "rock"
-        ]
+        ],
+        "stats": 485,
+        "effort_value": 2
     },
     "chansey": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 113,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 450,
+        "effort_value": 2
     },
     "seadra": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 117,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 440,
+        "effort_value": 2
     },
     "seaking": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 119,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 450,
+        "effort_value": 2
     },
     "starmie": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 121,
         "types": [
             "water",
             "psychic"
-        ]
+        ],
+        "stats": 520,
+        "effort_value": 2
     },
     "mr-mime": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 122,
         "types": [
             "psychic",
             "fairy"
-        ]
+        ],
+        "stats": 460,
+        "effort_value": 2
     },
     "jynx": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 124,
         "types": [
             "ice",
             "psychic"
-        ]
+        ],
+        "stats": 455,
+        "effort_value": 2
     },
     "electabuzz": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 125,
         "types": [
             "electric"
-        ]
+        ],
+        "stats": 490,
+        "effort_value": 2
     },
     "magmar": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 126,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 495,
+        "effort_value": 2
     },
     "gyarados": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 130,
         "types": [
             "water",
             "flying"
-        ]
+        ],
+        "stats": 540,
+        "effort_value": 2
     },
     "vaporeon": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 134,
         "types": [
             "water"
-        ]
+        ],
+        "stats": 525,
+        "effort_value": 2
     },
     "jolteon": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 135,
         "types": [
             "electric"
-        ]
+        ],
+        "stats": 525,
+        "effort_value": 2
     },
     "flareon": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 136,
         "types": [
             "fire"
-        ]
+        ],
+        "stats": 525,
+        "effort_value": 2
     },
     "omastar": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 139,
         "types": [
             "rock",
             "water"
-        ]
+        ],
+        "stats": 495,
+        "effort_value": 2
     },
     "kabutops": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 141,
         "types": [
             "rock",
             "water"
-        ]
+        ],
+        "stats": 495,
+        "effort_value": 2
     },
     "snorlax": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 143,
         "types": [
             "normal"
-        ]
+        ],
+        "stats": 540,
+        "effort_value": 2
     },
     "dragonair": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 148,
         "types": [
             "dragon"
-        ]
+        ],
+        "stats": 420,
+        "effort_value": 2
     },
     "dragonite": {
-        "tier": 1,
-        "variance": 0,
-        "handicap": 0,
         "id": 149,
         "types": [
             "dragon",
             "flying"
-        ]
+        ],
+        "stats": 600,
+        "effort_value": 3
     }
 }
 

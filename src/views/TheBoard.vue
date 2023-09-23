@@ -29,13 +29,6 @@ export default {
       const secondArray = shuffledArray.slice(5, 10).map(pokemonName => ({ name: pokemonName, types: pokemon.data[pokemonName].types, id: pokemon.data[pokemonName].id, stats: this.allocateStatsByPokemon(pokemonName) }));
       this.cardsToDeal = [firstArray, secondArray];
     },
-    randomVariance(variance) {
-      if (variance === 0) {
-        return 0;
-      }
-
-      return Math.floor(Math.random() * (2 * variance + 1)) - variance;
-    },
     decrementRandomStat(stats) {
       const randomIndex = Math.floor(Math.random() * stats.length);
 
@@ -47,9 +40,10 @@ export default {
       }
     },
     allocateStatsByPokemon(pokemonName) {
-      const pokemonTierIndex = pokemon.data[pokemonName].tier - 1;
-      const statSum = pokemon.statAllocations[pokemonTierIndex] + pokemon.data[pokemonName].handicap + this.randomVariance(pokemon.data[pokemonName].variance);
+      const currentPokemon = pokemon.data[pokemonName];
+      let statSum = Math.round(currentPokemon.stats / 17);
       let statsToReturn = [10, 10, 10, 10];
+
       let numberOfIterations = statsToReturn.reduce((total, value) => total + value, 0) - statSum;
 
       for (let i = 0; i < numberOfIterations; i++) {
