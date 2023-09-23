@@ -90,11 +90,11 @@ export default {
         mirror.classList.add('z-50');
       });
 
-      // droppable.on('droppable:dropped', (event) => {
-      //   if (event.dropzone.children.length > 0) {
-      //     event.cancel();
-      //   }
-      // });
+      droppable.on('droppable:dropped', (event) => {
+        if (event.dropzone.children.length > 0) {
+          event.cancel();
+        }
+      });
     });
 
   }
