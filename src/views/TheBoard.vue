@@ -56,7 +56,6 @@ export default {
   mounted() {
     this.setRandomCards();
 
-    // const cells = document.querySelectorAll('.cells');
     this.$nextTick(() => {
       const cells = document.querySelectorAll('.cells');
 
