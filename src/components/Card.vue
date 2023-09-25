@@ -1,6 +1,6 @@
 <template>
     <div class="relative card">
-        <div ref="cardFront" class="card-front-hiding rounded-md p-3 content-border-wrap select-none aspect-square shadow">
+        <div ref="cardFront" class="card-front-hiding border-front rounded-md p-3 select-none aspect-square shadow">
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-default`">
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
                     <ElementalTypes class="m-1.5 absolute top-0 right-0" :types="pokemonCard.types" />
@@ -12,10 +12,8 @@
                 <Stats class="absolute top-0 left-0 mt-0.5" :stats="pokemonCard.stats" />
             </div>
         </div>
-        <div ref="cardBack" class="card-back-showing absolute top-0 left-0 w-full h-full rounded-md p-3 content-border-wrap select-none aspect-square shadow">
-            <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-default`">
-                <div class="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
-                </div>
+        <div ref="cardBack" class="card-back-showing border-back absolute top-0 left-0 w-full h-full rounded-md p-3 select-none aspect-square shadow">
+            <div class="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
             </div>
         </div>
     </div>
@@ -73,8 +71,12 @@ export default {
 </script>
 
 <style scoped>
-.content-border-wrap {
+.border-front {
     @apply bg-gradient-to-br from-yellow-500 to-yellow-600;
+}
+
+.border-back {
+    @apply bg-gradient-to-br from-blue-500 to-blue-600;
 }
 
 .card-back-showing {

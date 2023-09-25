@@ -19,7 +19,8 @@ export default {
     Hand
   },
   data: () => ({
-    cardsToDeal: []
+    cardsToDeal: [],
+    statModifier: 20
   }),
   methods: {
     setRandomCards() {
@@ -41,7 +42,7 @@ export default {
     },
     allocateStatsByPokemon(pokemonName) {
       const currentPokemon = pokemon.data[pokemonName];
-      let statSum = Math.round(currentPokemon.stats / 17);
+      let statSum = Math.round(currentPokemon.stats / this.statModifier);
       let statsToReturn = [10, 10, 10, 10];
 
       let numberOfIterations = statsToReturn.reduce((total, value) => total + value, 0) - statSum;
@@ -86,7 +87,10 @@ export default {
       droppable.on('droppable:dropped', (event) => {
         if (event.dropzone.children.length > 0) {
           event.cancel();
+          return;
         }
+
+        console.log(event)
       });
     });
 
