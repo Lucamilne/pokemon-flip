@@ -1,8 +1,8 @@
 <template>
   <main class="h-screen flex justify-between items-center px-4 bg-[url('@/assets/textures/background.png')] bg-center bg-cover">
-    <Hand :cards="cardsToDeal[0]" class="basis-44" :isPlayerHand="true" />
-    <Grid class="basis-1/2" />
-    <Hand :cards="cardsToDeal[1]" class="basis-44" :isPlayerHand="false" />
+    <Hand :cards="cardsToDeal[0]" class="basis-44" :isPlayerHand="true" id="player-one-hand" />
+    <Grid class="basis-1/2" :cells="cells" />
+    <Hand :cards="cardsToDeal[1]" class="basis-44" :isPlayerHand="false" id="player-two-hand" />
   </main>
 </template>
 
@@ -20,7 +20,63 @@ export default {
   },
   data: () => ({
     cardsToDeal: [],
-    statModifier: 20
+    statModifier: 20,
+    cells: {
+      A1: {
+        class: 'border-r-0 border-b-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['A2', 'B2']
+      },
+      A2: {
+        class: 'border-r-0 border-b-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['A1', 'B2', 'A3']
+      },
+      A3: {
+        class: 'border-b-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['B2', 'C3']
+      },
+      B1: {
+        class: 'border-b-0 border-r-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['A1', 'B2', 'C1']
+      },
+      B2: {
+        class: 'border-b-0 border-r-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['B1', 'A2', 'B3', 'C2']
+      },
+      B3: {
+        class: 'border-b-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['B2', 'A3', 'C3']
+      },
+      C1: {
+        class: 'border-r-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['B1', 'C2']
+      },
+      C2: {
+        class: 'border-r-0',
+        cardData: null,
+        element: null,
+        adjacentCells: ['C1', 'B2', 'C3']
+      },
+      C3: {
+        class: '',
+        cardData: null,
+        element: null,
+        adjacentCells: ['C2', 'B3']
+      },
+    }
   }),
   methods: {
     setRandomCards() {
@@ -71,11 +127,9 @@ export default {
       });
 
       droppable.on('drag:start', (event) => {
-        //
       });
 
       droppable.on('drag:stop', (event) => {
-        //
       });
 
       // manipulate mirror of dragged card
@@ -90,7 +144,20 @@ export default {
           return;
         }
 
-        console.log(event)
+        if (event.data.dropzone.attributes['data-cell'] === undefined) {
+          return;
+        }
+
+        // this is currently triggering before a user has dropped a card.
+        // might have to debounce this using lodash
+        const attributes = event.data.dragEvent.data.source.attributes;
+        const cellTarget = event.data.dropzone.attributes['data-cell'].value;
+        const cardData = {
+          stats: attributes['data-stats'].value,
+          types: attributes['data-types'].value
+        }
+
+        this.cells[cellTarget].cardData = cardData;
       });
     });
 
