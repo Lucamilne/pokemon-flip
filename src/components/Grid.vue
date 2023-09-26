@@ -10,6 +10,14 @@ export default {
   name: 'Grid',
   props: {
     cells: Object
+  },
+  watch: {
+    cells: {
+      handler(newValue, oldValue) {
+        //
+      },
+      deep: true
+    }
   }
 }
 </script>

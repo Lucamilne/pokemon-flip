@@ -42,6 +42,9 @@ export default {
         },
     },
     methods: {
+        test() {
+            console.log('hello')
+        },
         flipCard() {
             const cardBackClassList = this.$refs.cardBack.classList;
             const cardFrontClassList = this.$refs.cardFront.classList;

@@ -26,25 +26,25 @@ export default {
         class: 'border-r-0 border-b-0',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['A2', 'B2']
+        adjacentCells: [null, null, 'A2', 'B1']
       },
       A2: {
         class: 'border-r-0 border-b-0',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['A1', 'B2', 'A3']
+        adjacentCells: ['A1', null, 'A3', 'B2']
       },
       A3: {
         class: 'border-b-0',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['B2', 'C3']
+        adjacentCells: ['A2', null, null, 'B3']
       },
       B1: {
         class: 'border-b-0 border-r-0',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['A1', 'B2', 'C1']
+        adjacentCells: [null, 'A1', 'B2', 'C1']
       },
       B2: {
         class: 'border-b-0 border-r-0',
@@ -56,25 +56,25 @@ export default {
         class: 'border-b-0',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['B2', 'A3', 'C3']
+        adjacentCells: ['B2', 'A3', null, 'C3']
       },
       C1: {
         class: 'border-r-0',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['B1', 'C2']
+        adjacentCells: [null, 'B1', 'C2', null]
       },
       C2: {
         class: 'border-r-0',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['C1', 'B2', 'C3']
+        adjacentCells: ['C1', 'B2', 'C3', null]
       },
       C3: {
         class: '',
         pokemonCardId: null,
         element: null,
-        adjacentCells: ['C2', 'B3']
+        adjacentCells: ['C2', 'B3', null, null]
       },
     }
   }),
@@ -152,8 +152,19 @@ export default {
       });
 
       droppable.on("drag:stop", () => {
-        this.cells[cellTarget].pokemonCardId = cardName;
-        console.log(this.cells)
+        this.cells[cellTarget].pokemonCardId = cardName; // declare the occupying card
+
+        this.cells[cellTarget].adjacentCells.forEach(cell => {
+          if (!cell || !this.cells[cell].pokemonCardId) {
+            return;
+          }
+
+          const defendingCard = document.getElementById(this.cells[cell].pokemonCardId);
+          const defendingStatIndex = this.cells[cell].adjacentCells.indexOf(cellTarget);
+          const defendingStat = defendingCard.getAttribute("data-stats").split(',')[defendingStatIndex];
+
+          console.log(defendingStat)
+        })
       });
     });
 
