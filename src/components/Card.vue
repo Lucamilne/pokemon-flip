@@ -34,7 +34,7 @@ export default {
         ElementalTypes
     },
     data: () => ({
-        isFlipped: false
+        //
     }),
     computed: {
         bgGradient() {
@@ -63,9 +63,7 @@ export default {
         },
     },
     mounted() {
-        if (this.isPlayerCard) {
-            this.flipCard();
-        }
+        this.flipCard();
     }
 }
 </script>

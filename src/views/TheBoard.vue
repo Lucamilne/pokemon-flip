@@ -24,55 +24,55 @@ export default {
     cells: {
       A1: {
         class: 'border-r-0 border-b-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['A2', 'B2']
       },
       A2: {
         class: 'border-r-0 border-b-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['A1', 'B2', 'A3']
       },
       A3: {
         class: 'border-b-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['B2', 'C3']
       },
       B1: {
         class: 'border-b-0 border-r-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['A1', 'B2', 'C1']
       },
       B2: {
         class: 'border-b-0 border-r-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['B1', 'A2', 'B3', 'C2']
       },
       B3: {
         class: 'border-b-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['B2', 'A3', 'C3']
       },
       C1: {
         class: 'border-r-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['B1', 'C2']
       },
       C2: {
         class: 'border-r-0',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['C1', 'B2', 'C3']
       },
       C3: {
         class: '',
-        childRef: null,
+        pokemonCardId: null,
         element: null,
         adjacentCells: ['C2', 'B3']
       },
@@ -132,36 +132,29 @@ export default {
         mirror.classList.add('z-50');
       });
 
-      let childRef;
+      let cardName;
       let cellTarget;
+
+      droppable.on('drag:start', (event) => {
+        if (event.data.sourceContainer.id === 'grid') {
+          event.cancel();
+        }
+      })
 
       droppable.on("droppable:dropped", (event) => {
         if (!event.data.dropzone.attributes['data-cell']) {
+          event.cancel();
           return;
         }
 
-        childRef = event.data.dragEvent.data.source.attributes['data-name'].value;
+        cardName = event.data.dragEvent.data.source.attributes['data-name'].value;
         cellTarget = event.data.dropzone.attributes['data-cell'].value;
       });
 
-      droppable.on("drag:stop", (event) => {
-        console.log(childRef, cellTarget)
+      droppable.on("drag:stop", () => {
+        this.cells[cellTarget].pokemonCardId = cardName;
+        console.log(this.cells)
       });
-
-      // droppable.on('droppable:dropped', (event) => {
-
-      //   if (event.data.dropzone.attributes['data-cell'] === undefined) {
-      //     return;
-      //   }
-
-      //   // this is currently triggering before a user has dropped a card.
-      //   // might have to debounce this using lodash
-      //   const childRef = event.data.dragEvent.data.source.attributes['data-name'].value;
-      //   const cellTarget = event.data.dropzone.attributes['data-cell'].value;
-
-      //   this.cells[cellTarget].childRef = childRef;
-      //   console.log(this.$refs)
-      // });
     });
 
   }
