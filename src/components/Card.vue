@@ -1,6 +1,6 @@
 <template>
     <div class="relative card" :data-is-player-card="internalIsPlayerCard" ref="card">
-        <div ref="cardFront" class="card-front-hiding border-front rounded-md p-3 select-none aspect-square shadow">
+        <div ref="cardFront" class="border-front rounded-md p-3 select-none aspect-square shadow" :class="{ 'card-shown': isFlipped, 'card-hidden': !isFlipped }">
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-default`">
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
                     <ElementalTypes class="m-1.5 absolute top-0 right-0" :types="pokemonCard.types" />
@@ -12,7 +12,7 @@
                 <Stats class="absolute top-0 left-0 mt-0.5" :stats="pokemonCard.stats" />
             </div>
         </div>
-        <div ref="cardBack" class="card-back-showing border-back absolute top-0 left-0 w-full h-full rounded-md p-3 select-none aspect-square shadow">
+        <div ref="cardBack" class="border-back absolute top-0 left-0 w-full h-full rounded-md p-3 select-none aspect-square shadow" :class="{ 'card-shown': !isFlipped, 'card-hidden': isFlipped }">
             <div class="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
             </div>
         </div>
@@ -35,12 +35,12 @@ export default {
         ElementalTypes
     },
     data: () => ({
-        internalIsPlayerCard: null
+        internalIsPlayerCard: null,
+        isFlipped: false,
     }),
     watch: {
         isPlayerCard: {
             handler(newValue) {
-                // Update the internal value when the prop changes
                 this.internalIsPlayerCard = newValue;
             },
             immediate: true
@@ -53,40 +53,21 @@ export default {
     },
     methods: {
         toggleIsPlayerCard() {
-            const cardBackClassList = this.$refs.cardBack.classList;
-            const cardFrontClassList = this.$refs.cardFront.classList;
+            // this.$refs.card.classList.add('rotate');
 
-            cardFrontClassList.add('rotate');
-
-            setTimeout(() => {
-                this.$refs.card.classList.remove('rotate');
-            }, 250);
-
+            // setTimeout(() => {
+            //     this.$refs.card.classList.remove('rotate');
+            // }, 500);
 
             this.internalIsPlayerCard = !this.internalIsPlayerCard;
         },
         flipCard() {
-            const cardBackClassList = this.$refs.cardBack.classList;
-            const cardFrontClassList = this.$refs.cardFront.classList;
-
-            if (
-                cardBackClassList.contains('card-back-showing') &&
-                cardFrontClassList.contains('card-front-hiding')
-            ) {
-                cardBackClassList.remove('card-back-showing');
-                cardFrontClassList.remove('card-front-hiding');
-                cardBackClassList.add('card-back-hiding');
-                cardFrontClassList.add('card-front-showing');
-            } else {
-                cardBackClassList.remove('card-back-hiding');
-                cardFrontClassList.remove('card-front-showing');
-                cardBackClassList.add('card-back-showing');
-                cardFrontClassList.add('card-front-hiding');
-            }
+            this.isFlipped = !this.isFlipped;
         },
     },
     mounted() {
         const animationDelay = 150;
+
         setTimeout(() => {
             this.flipCard()
         }, this.index * animationDelay + (this.isPlayerCard ? 0 : animationDelay * 5));
@@ -103,56 +84,18 @@ export default {
     @apply bg-gradient-to-br from-blue-500 to-blue-600;
 }
 
-.rotate-front {
-    transform: rotateX(0deg) scale(1);
-    animation: rotateAnimation 250ms ease-out forwards;
-}
-
-.rotate-back {
-    transform: rotateX(0deg) scale(1);
-    animation: rotateAnimation 250ms ease-out forwards;
-    animation-delay: 250ms;
-}
-
-
-@keyframes rotateAnimation {
-    0% {
-        transform: rotateX(0deg) scale(1);
-    }
-
-    50% {
-        transform: rotateX(180deg) scale(1.2);
-    }
-
-    100% {
-        transform: rotateX(360deg) scale(1);
-    }
-}
-
-.card-back-showing {
-    transform: rotateY(0deg);
-    opacity: 1;
-}
-
-.card-back-hiding {
-    transform: rotateY(180deg);
+.card-hidden {
+    transform: rotateY(-180deg);
     opacity: 0;
 }
 
-.card-front-showing {
+.card-shown {
     transform: rotateY(0deg);
     opacity: 1;
 }
 
-.card-front-hiding {
-    transform: rotateY(180deg);
-    opacity: 1;
-}
-
-.card-front-showing,
-.card-back-showing,
-.card-front-hiding,
-.card-back-hiding {
+.card-hidden,
+.card-shown {
     transition-property: transform, opacity;
     transition-duration: 500ms;
     transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.27);

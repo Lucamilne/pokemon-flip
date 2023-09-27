@@ -25,7 +25,7 @@ for (const pokemon of pokemonList) {
 //     "overgrow":3, increases random stats by 1 when flipped once per game
 //     "blaze":3, increases random stats by 1 when flipped once per game
 //     "torrent":3, increases random stats by 1 when flipped once per game
-//     "chlorophyll":9, random stats increase by 2 when on grass tile
+//     "chlorophyll":9, stats have a chance to be increased by 2 when on grass tile
 //     "rock-head":9, cannot be combod
 //     "sturdy":6, Will always resist an equal attacking card regardless of type.
 //     "vital-spirit":2, cannot have stats lowered by more than 1

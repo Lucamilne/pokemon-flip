@@ -88,10 +88,23 @@ export default {
   }),
   methods: {
     setRandomCards() {
-      const arrayOfPokemon = Object.keys(pokemon.data);
-      const shuffledArray = arrayOfPokemon.slice().sort(() => Math.random() - 0.5);
-      const firstArray = shuffledArray.slice(0, 5).map(pokemonName => ({ name: pokemonName, types: pokemon.data[pokemonName].types, id: pokemon.data[pokemonName].id, stats: this.allocateStatsByPokemon(pokemonName) }));
-      const secondArray = shuffledArray.slice(5, 10).map(pokemonName => ({ name: pokemonName, types: pokemon.data[pokemonName].types, id: pokemon.data[pokemonName].id, stats: this.allocateStatsByPokemon(pokemonName) }));
+      const shuffledArray = Object.keys(pokemon.data)
+        .sort(() => Math.random() - 0.5);
+
+      const createCard = (pokemonName) => {
+        const stats = this.allocateStatsByPokemon(pokemonName);
+        return {
+          name: pokemonName,
+          types: pokemon.data[pokemonName].types,
+          id: pokemon.data[pokemonName].id,
+          stats: stats,
+          originalStats: stats, // A copy of stats is kept to track modifications
+        };
+      };
+
+      const firstArray = shuffledArray.slice(0, 5).map(createCard);
+      const secondArray = shuffledArray.slice(5, 10).map(createCard);
+
       this.cardsToDeal = [firstArray, secondArray];
     },
     decrementRandomStat(stats) {
@@ -160,7 +173,9 @@ export default {
       });
 
       droppable.on("drag:stop", () => {
-        this.cells[cellTarget].pokemonCardRef = attackingPokemonCardAttributes['data-name'].value; // declare the attacking card
+        // most of the calculations on card placement are done here
+        const attackingPokemonName = attackingPokemonCardAttributes['data-name'].value
+        this.cells[cellTarget].pokemonCardRef = attackingPokemonName; // declare the attacking card
 
         this.cells[cellTarget].adjacentCells.forEach((cell, index) => {
           if (!cell || !this.cells[cell].pokemonCardRef) {
