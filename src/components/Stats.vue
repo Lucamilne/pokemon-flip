@@ -17,6 +17,7 @@ export default {
     name: 'Stats',
     props: {
         stats: Array,
+        originalStats: Array,
         element: String
     },
     computed: {

@@ -1,5 +1,5 @@
 <template>
-  <main class="h-screen flex justify-between items-center px-4 bg-[url('@/assets/textures/background.png')] bg-center bg-cover">
+  <main class="h-screen flex justify-between items-center px-4 bg-center bg-cover">
     <div class="grid grid-cols-1 gap-2 cells">
       <div class="dropzone aspect-square w-40" v-for="(pokemonCard, index) in cardsToDeal[0]">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
@@ -107,6 +107,22 @@ export default {
 
       this.cardsToDeal = [firstArray, secondArray];
     },
+    setRandomElementalTiles() {
+      const gridCells = Object.keys(this.cells);
+      const arrayOfPokemonTypes = pokemon.types.filter(type => type !== "normal");;
+
+      gridCells.forEach(cell => {
+        if (Math.random() < 0.25) {
+          const randomElement = arrayOfPokemonTypes[Math.floor(Math.random() * arrayOfPokemonTypes.length)];
+          this.cells[cell].element = randomElement;
+          const indexToRemove = arrayOfPokemonTypes.indexOf[randomElement];
+          if (indexToRemove !== -1) {
+            arrayOfPokemonTypes.splice(indexToRemove, 1); // remove the element at the found index
+          }
+        }
+      })
+      console.log(this.cells)
+    },
     decrementRandomStat(stats) {
       const randomIndex = Math.floor(Math.random() * stats.length);
 
@@ -133,6 +149,7 @@ export default {
   },
   mounted() {
     this.setRandomCards();
+    this.setRandomElementalTiles();
 
     this.$nextTick(() => {
       const cells = document.querySelectorAll('.cells');

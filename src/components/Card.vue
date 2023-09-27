@@ -9,7 +9,7 @@
                         {{ pokemonCard.name }}
                     </div>
                 </div>
-                <Stats class="absolute top-0 left-0 mt-0.5" :stats="pokemonCard.stats" />
+                <Stats class="absolute top-0 left-0 mt-0.5" :stats="pokemonCard.stats" :original-stats="pokemonCard.originalStats" />
             </div>
         </div>
         <div ref="cardBack" class="border-back absolute top-0 left-0 w-full h-full rounded-md p-3 select-none aspect-square shadow" :class="{ 'card-shown': !isFlipped, 'card-hidden': isFlipped }">

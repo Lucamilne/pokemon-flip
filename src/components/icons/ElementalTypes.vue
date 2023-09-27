@@ -8,23 +8,23 @@
 </template>
 
 <script>
-import BugTypeIcon from "../../assets/icons/types/BugIC_Big.png";
-import DragonTypeIcon from "../../assets/icons/types/DragonIC_Big.png";
-import ElectricTypeIcon from "../../assets/icons/types/ElectricIC_Big.png";
-import FairyTypeIcon from "../../assets/icons/types/FairyIC_Big.png";
-import FightingTypeIcon from "../../assets/icons/types/FightingIC_Big.png";
-import FireTypeIcon from "../../assets/icons/types/FireIC_Big.png";
-import FlyingTypeIcon from "../../assets/icons/types/FlyingIC_Big.png";
-import GhostTypeIcon from "../../assets/icons/types/GhostIC_Big.png";
-import GrassTypeIcon from "../../assets/icons/types/GrassIC_Big.png";
-import GroundTypeIcon from "../../assets/icons/types/GroundIC_Big.png";
-import IceTypeIcon from "../../assets/icons/types/IceIC_Big.png";
-import NormalTypeIcon from "../../assets/icons/types/NormalIC_Big.png";
-import PoisonTypeIcon from "../../assets/icons/types/PoisonIC_Big.png";
-import PsychicTypeIcon from "../../assets/icons/types/PsychicIC_Big.png";
-import RockTypeIcon from "../../assets/icons/types/RockIC_Big.png";
-import SteelTypeIcon from "../../assets/icons/types/SteelIC_Big.png";
-import WaterTypeIcon from "../../assets/icons/types/WaterIC_Big.png";
+import BugTypeIcon from "../../assets/icons/types/BugIC_SM.png";
+import DragonTypeIcon from "../../assets/icons/types/DragonIC_SM.png";
+import ElectricTypeIcon from "../../assets/icons/types/ElectricIC_SM.png";
+import FairyTypeIcon from "../../assets/icons/types/FairyIC_SM.png";
+import FightingTypeIcon from "../../assets/icons/types/FightingIC_SM.png";
+import FireTypeIcon from "../../assets/icons/types/FireIC_SM.png";
+import FlyingTypeIcon from "../../assets/icons/types/FlyingIC_SM.png";
+import GhostTypeIcon from "../../assets/icons/types/GhostIC_SM.png";
+import GrassTypeIcon from "../../assets/icons/types/GrassIC_SM.png";
+import GroundTypeIcon from "../../assets/icons/types/GroundIC_SM.png";
+import IceTypeIcon from "../../assets/icons/types/IceIC_SM.png";
+import NormalTypeIcon from "../../assets/icons/types/NormalIC_SM.png";
+import PoisonTypeIcon from "../../assets/icons/types/PoisonIC_SM.png";
+import PsychicTypeIcon from "../../assets/icons/types/PsychicIC_SM.png";
+import RockTypeIcon from "../../assets/icons/types/RockIC_SM.png";
+import SteelTypeIcon from "../../assets/icons/types/SteelIC_SM.png";
+import WaterTypeIcon from "../../assets/icons/types/WaterIC_SM.png";
 
 export default {
     name: "ElementalType",

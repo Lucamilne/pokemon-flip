@@ -1,5 +1,25 @@
 let pokemon = {};
 
+pokemon.types = [
+    "bug",
+    "dragon",
+    "electric",
+    "fairy",
+    "fighting",
+    "fire",
+    "flying",
+    "ghost",
+    "grass",
+    "ground",
+    "ice",
+    "normal",
+    "poison",
+    "psychic",
+    "rock",
+    "steel",
+    "water"
+];
+
 pokemon.data = {
     "bulbasaur": {
         "id": 1,
