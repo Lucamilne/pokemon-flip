@@ -1,22 +1,30 @@
 <template>
   <main class="h-screen flex justify-between items-center px-4 bg-[url('@/assets/textures/background.png')] bg-center bg-cover">
-    <Hand :cards="cardsToDeal[0]" class="basis-44" :isPlayerHand="true" ref="player-one-hand" />
+    <div class="grid grid-cols-1 gap-2 cells">
+      <div class="dropzone aspect-square w-40" v-for="pokemonCard in cardsToDeal[0]">
+        <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
+      </div>
+    </div>
     <Grid class="basis-1/2" :cells="cells" ref="grid" />
-    <Hand :cards="cardsToDeal[1]" class="basis-44" :isPlayerHand="false" ref="player-two-hand" />
+    <div class="grid grid-cols-1 gap-2 cells">
+      <div class="dropzone aspect-square  w-40" v-for="pokemonCard in cardsToDeal[1]">
+        <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
+      </div>
+    </div>
   </main>
 </template>
 
 <script>
 import Grid from '../components/Grid.vue';
-import Hand from '../components/Hand.vue';
 import pokemon from "@/assets/data/pokemon-species.js";
 import { Plugins, Droppable } from '@shopify/draggable';
+import Card from '../components/Card.vue'
 
 export default {
   name: 'TheBoard',
   components: {
     Grid,
-    Hand
+    Card
   },
   data: () => ({
     cardsToDeal: [],
@@ -24,55 +32,55 @@ export default {
     cells: {
       A1: {
         class: 'border-r-0 border-b-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: [null, null, 'A2', 'B1']
       },
       A2: {
         class: 'border-r-0 border-b-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: ['A1', null, 'A3', 'B2']
       },
       A3: {
         class: 'border-b-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: ['A2', null, null, 'B3']
       },
       B1: {
         class: 'border-b-0 border-r-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: [null, 'A1', 'B2', 'C1']
       },
       B2: {
         class: 'border-b-0 border-r-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: ['B1', 'A2', 'B3', 'C2']
       },
       B3: {
         class: 'border-b-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: ['B2', 'A3', null, 'C3']
       },
       C1: {
         class: 'border-r-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: [null, 'B1', 'C2', null]
       },
       C2: {
         class: 'border-r-0',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: ['C1', 'B2', 'C3', null]
       },
       C3: {
         class: '',
-        pokemonCardId: null,
+        pokemonCardRef: null,
         element: null,
         adjacentCells: ['C2', 'B3', null, null]
       },
@@ -132,7 +140,7 @@ export default {
         mirror.classList.add('z-50');
       });
 
-      let cardName;
+      let attackingPokemonCardAttributes;
       let cellTarget;
 
       droppable.on('drag:start', (event) => {
@@ -147,23 +155,27 @@ export default {
           return;
         }
 
-        cardName = event.data.dragEvent.data.source.attributes['data-name'].value;
+        attackingPokemonCardAttributes = event.data.dragEvent.data.source.attributes;
         cellTarget = event.data.dropzone.attributes['data-cell'].value;
       });
 
       droppable.on("drag:stop", () => {
-        this.cells[cellTarget].pokemonCardId = cardName; // declare the occupying card
+        this.cells[cellTarget].pokemonCardRef = attackingPokemonCardAttributes['data-name'].value; // declare the attacking card
 
-        this.cells[cellTarget].adjacentCells.forEach(cell => {
-          if (!cell || !this.cells[cell].pokemonCardId) {
+        this.cells[cellTarget].adjacentCells.forEach((cell, index) => {
+          if (!cell || !this.cells[cell].pokemonCardRef) {
             return;
           }
 
-          const defendingCard = document.getElementById(this.cells[cell].pokemonCardId);
+          const defendingCardRef = this.$refs[this.cells[cell].pokemonCardRef]
           const defendingStatIndex = this.cells[cell].adjacentCells.indexOf(cellTarget);
-          const defendingStat = defendingCard.getAttribute("data-stats").split(',')[defendingStatIndex];
+          const defendingStat = defendingCardRef[0].pokemonCard.stats[defendingStatIndex];
+          const attackingStat = parseInt(attackingPokemonCardAttributes['data-stats'].value.split(',')[index], 10);
+          console.log(defendingStat, attackingStat)
 
-          console.log(defendingStat)
+          // if attackingStat > defendingStat && !isPlayerCard, switchOwnership
+
+          // console.log(defendingStat)
         })
       });
     });

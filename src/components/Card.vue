@@ -1,5 +1,5 @@
 <template>
-    <div class="relative card">
+    <div class="relative card" :ref="pokemonCard.name">
         <div ref="cardFront" class="card-front-hiding border-front rounded-md p-3 select-none aspect-square shadow">
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-default`">
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
@@ -42,9 +42,6 @@ export default {
         },
     },
     methods: {
-        test() {
-            console.log('hello')
-        },
         flipCard() {
             const cardBackClassList = this.$refs.cardBack.classList;
             const cardFrontClassList = this.$refs.cardFront.classList;
