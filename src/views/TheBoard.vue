@@ -1,14 +1,14 @@
 <template>
   <main class="h-screen flex justify-between items-center px-4 bg-[url('@/assets/textures/background.png')] bg-center bg-cover">
     <div class="grid grid-cols-1 gap-2 cells">
-      <div class="dropzone aspect-square w-40" v-for="pokemonCard in cardsToDeal[0]">
-        <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
+      <div class="dropzone aspect-square w-40" v-for="(pokemonCard, index) in cardsToDeal[0]">
+        <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
     <Grid class="basis-1/2" :cells="cells" ref="grid" />
     <div class="grid grid-cols-1 gap-2 cells">
-      <div class="dropzone aspect-square  w-40" v-for="pokemonCard in cardsToDeal[1]">
-        <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
+      <div class="dropzone aspect-square  w-40" v-for="(pokemonCard, index) in cardsToDeal[1]">
+        <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
   </main>
@@ -171,9 +171,9 @@ export default {
           const defendingStatIndex = this.cells[cell].adjacentCells.indexOf(cellTarget);
           const defendingStat = defendingCardRef[0].pokemonCard.stats[defendingStatIndex];
           const attackingStat = parseInt(attackingPokemonCardAttributes['data-stats'].value.split(',')[index], 10);
-          const isPlayerCard = JSON.parse(attackingPokemonCardAttributes['data-is-player-card'].value)
+          const isPlayerCardAttacking = JSON.parse(attackingPokemonCardAttributes['data-is-player-card'].value)
 
-          if (attackingStat > defendingStat && defendingCardRef[0].internalIsPlayerCard !== isPlayerCard) {
+          if (attackingStat > defendingStat && defendingCardRef[0].internalIsPlayerCard !== isPlayerCardAttacking) {
             defendingCardRef[0].toggleIsPlayerCard();
           }
         })

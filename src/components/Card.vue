@@ -1,5 +1,5 @@
 <template>
-    <div class="relative card" :data-is-player-card="internalIsPlayerCard">
+    <div class="relative card" :data-is-player-card="internalIsPlayerCard" ref="card">
         <div ref="cardFront" class="card-front-hiding border-front rounded-md p-3 select-none aspect-square shadow">
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-default`">
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
@@ -27,7 +27,8 @@ export default {
     name: 'Card',
     props: {
         pokemonCard: Object,
-        isPlayerCard: Boolean
+        isPlayerCard: Boolean,
+        index: Number
     },
     components: {
         Stats,
@@ -52,6 +53,16 @@ export default {
     },
     methods: {
         toggleIsPlayerCard() {
+            const cardBackClassList = this.$refs.cardBack.classList;
+            const cardFrontClassList = this.$refs.cardFront.classList;
+
+            cardFrontClassList.add('rotate');
+
+            setTimeout(() => {
+                this.$refs.card.classList.remove('rotate');
+            }, 250);
+
+
             this.internalIsPlayerCard = !this.internalIsPlayerCard;
         },
         flipCard() {
@@ -75,7 +86,10 @@ export default {
         },
     },
     mounted() {
-        this.flipCard();
+        const animationDelay = 150;
+        setTimeout(() => {
+            this.flipCard()
+        }, this.index * animationDelay + (this.isPlayerCard ? 0 : animationDelay * 5));
     }
 }
 </script>
@@ -87,6 +101,32 @@ export default {
 
 .border-back {
     @apply bg-gradient-to-br from-blue-500 to-blue-600;
+}
+
+.rotate-front {
+    transform: rotateX(0deg) scale(1);
+    animation: rotateAnimation 250ms ease-out forwards;
+}
+
+.rotate-back {
+    transform: rotateX(0deg) scale(1);
+    animation: rotateAnimation 250ms ease-out forwards;
+    animation-delay: 250ms;
+}
+
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotateX(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotateX(180deg) scale(1.2);
+    }
+
+    100% {
+        transform: rotateX(360deg) scale(1);
+    }
 }
 
 .card-back-showing {
