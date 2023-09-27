@@ -1,5 +1,5 @@
 <template>
-    <div class="relative card" :ref="pokemonCard.name">
+    <div class="relative card" :data-is-player-card="internalIsPlayerCard">
         <div ref="cardFront" class="card-front-hiding border-front rounded-md p-3 select-none aspect-square shadow">
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-default`">
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
@@ -34,14 +34,26 @@ export default {
         ElementalTypes
     },
     data: () => ({
-        //
+        internalIsPlayerCard: null
     }),
+    watch: {
+        isPlayerCard: {
+            handler(newValue) {
+                // Update the internal value when the prop changes
+                this.internalIsPlayerCard = newValue;
+            },
+            immediate: true
+        }
+    },
     computed: {
         bgGradient() {
-            return this.isPlayerCard ? 'bg-gradient-to-br from-water to-water-dark' : 'bg-gradient-to-br from-fighting to-fighting-dark';
+            return this.internalIsPlayerCard ? 'bg-gradient-to-br from-water to-water-dark' : 'bg-gradient-to-br from-fighting to-fighting-dark';
         },
     },
     methods: {
+        toggleIsPlayerCard() {
+            this.internalIsPlayerCard = !this.internalIsPlayerCard;
+        },
         flipCard() {
             const cardBackClassList = this.$refs.cardBack.classList;
             const cardFrontClassList = this.$refs.cardFront.classList;

@@ -171,11 +171,11 @@ export default {
           const defendingStatIndex = this.cells[cell].adjacentCells.indexOf(cellTarget);
           const defendingStat = defendingCardRef[0].pokemonCard.stats[defendingStatIndex];
           const attackingStat = parseInt(attackingPokemonCardAttributes['data-stats'].value.split(',')[index], 10);
-          console.log(defendingStat, attackingStat)
+          const isPlayerCard = JSON.parse(attackingPokemonCardAttributes['data-is-player-card'].value)
 
-          // if attackingStat > defendingStat && !isPlayerCard, switchOwnership
-
-          // console.log(defendingStat)
+          if (attackingStat > defendingStat && defendingCardRef[0].internalIsPlayerCard !== isPlayerCard) {
+            defendingCardRef[0].toggleIsPlayerCard();
+          }
         })
       });
     });
