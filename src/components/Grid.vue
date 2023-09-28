@@ -1,6 +1,6 @@
 <template>
   <div class="grid shadow grid-cols-3 cells" id="grid">
-    <div v-for="(value, key) in  cells " :key="key" :class="`relative dropzone bg-zinc-300/75 border border-4 border-black p-2 aspect-square ${value.class}`" :data-cell="key" :ref="key">
+    <div v-for="(value, key) in  cells " :key="key" :class="`relative dropzone bg-zinc-800 border border-4 border-zinc-400 p-2 aspect-square ${value.class}`" :data-cell="key" :ref="key">
       <img v-if="value.element" class="absolute w-1/2 h-1/2 inset-1/2 transform -translate-x-1/2 -translate-y-1/2" :src="tiles[value.element]">
     </div>
   </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="relative card" :data-is-player-card="internalIsPlayerCard" ref="card">
         <div ref="cardFront" class="border-front rounded-md p-3 select-none aspect-square shadow" :class="{ 'card-shown': isFlipped, 'card-hidden': !isFlipped }">
-            <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-default`">
+            <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-black`">
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
                     <ElementalTypes class="m-1.5 absolute top-0 right-0" :types="pokemonCard.types" />
                     <img class="mt-4" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`" />

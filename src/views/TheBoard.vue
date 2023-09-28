@@ -1,17 +1,17 @@
 <template>
-  <main class="h-screen flex justify-between items-center px-4 bg-center bg-cover">
+  <section class="flex justify-between items-center grid-background bg-center bg-cover">
     <div class="grid grid-cols-1 gap-2 cells">
-      <div class="dropzone aspect-square w-40" v-for="(pokemonCard, index) in cardsToDeal[0]">
+      <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[0]">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
-    <Grid class="basis-1/2" :cells="cells" ref="grid" />
+    <Grid class="basis-1/3" :cells="cells" ref="grid" />
     <div class="grid grid-cols-1 gap-2 cells">
-      <div class="dropzone aspect-square  w-40" v-for="(pokemonCard, index) in cardsToDeal[1]">
+      <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[1]">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
-  </main>
+  </section>
 </template>
 
 <script>
@@ -86,6 +86,11 @@ export default {
       },
     }
   }),
+  computed: {
+    dealCards() {
+      return [this.cardsToDeal.slice(0, 5), this.cardsToDeal.slice(5, 10),]
+    }
+  },
   methods: {
     setRandomCards() {
       const shuffledArray = Object.keys(pokemon.data)
@@ -102,26 +107,20 @@ export default {
         };
       };
 
-      const firstArray = shuffledArray.slice(0, 5).map(createCard);
-      const secondArray = shuffledArray.slice(5, 10).map(createCard);
-
-      this.cardsToDeal = [firstArray, secondArray];
+      this.cardsToDeal = shuffledArray.slice(0, 10).map(createCard);
     },
     setRandomElementalTiles() {
       const gridCells = Object.keys(this.cells);
-      const arrayOfPokemonTypes = pokemon.types.filter(type => type !== "normal");;
+      const arrayOfPokemonTypes = pokemon.types.filter(type => type !== "normal");
 
       gridCells.forEach(cell => {
-        if (Math.random() < 0.25) {
-          const randomElement = arrayOfPokemonTypes[Math.floor(Math.random() * arrayOfPokemonTypes.length)];
+        if (Math.random() < 0.25 && arrayOfPokemonTypes.length > 0) {
+          const randomIndex = Math.floor(Math.random() * arrayOfPokemonTypes.length);
+          const randomElement = arrayOfPokemonTypes[randomIndex];
           this.cells[cell].element = randomElement;
-          const indexToRemove = arrayOfPokemonTypes.indexOf[randomElement];
-          if (indexToRemove !== -1) {
-            arrayOfPokemonTypes.splice(indexToRemove, 1); // remove the element at the found index
-          }
+          arrayOfPokemonTypes.splice(randomIndex, 1); // Remove the element at the randomIndex
         }
-      })
-      console.log(this.cells)
+      });
     },
     decrementRandomStat(stats) {
       const randomIndex = Math.floor(Math.random() * stats.length);
@@ -145,6 +144,30 @@ export default {
       }
 
       return statsToReturn;
+    },
+    commaSeparatedStringToArray(input) {
+      if (typeof input === 'string') {
+        return input.split(',').map(item => item.trim());
+      } else {
+        return [input];
+      }
+    },
+    determineStatModifiers(attackingPokemon, indexOfAttackingPokemon, cell) {
+      if (attackingPokemon.types.some(type => type === 'normal')) {
+        return; // normal pokemon are not effected by elemental tiles
+      }
+      const { stats } = attackingPokemon;
+
+      const updateStatOnElementalTile = (stat) => {
+        if (attackingPokemon.types.includes(cell.element) && stat < 10) { // stat cannot be increased above 10
+          return stat + 1;
+        } else if (cell.element && stat > 1) { // stat cannot be decreased below 1
+          return stat - 1;
+        }
+        return stat; // No change
+      };
+
+      this.cardsToDeal[indexOfAttackingPokemon].stats = stats.map(updateStatOnElementalTile);
     }
   },
   mounted() {
@@ -191,8 +214,12 @@ export default {
 
       droppable.on("drag:stop", () => {
         // most of the calculations on card placement are done here
-        const attackingPokemonName = attackingPokemonCardAttributes['data-name'].value
+        const attackingPokemonName = attackingPokemonCardAttributes['data-name'].value;
         this.cells[cellTarget].pokemonCardRef = attackingPokemonName; // declare the attacking card
+        const indexOfAttackingPokemon = this.cardsToDeal.findIndex(pokemon => pokemon.name === attackingPokemonName);
+        const attackingPokemon = this.cardsToDeal[indexOfAttackingPokemon];
+
+        this.determineStatModifiers(attackingPokemon, indexOfAttackingPokemon, this.cells[cellTarget]); // add or remove stats on placement of attacking card
 
         this.cells[cellTarget].adjacentCells.forEach((cell, index) => {
           if (!cell || !this.cells[cell].pokemonCardRef) {
@@ -202,17 +229,24 @@ export default {
           const defendingCardRef = this.$refs[this.cells[cell].pokemonCardRef]
           const defendingStatIndex = this.cells[cell].adjacentCells.indexOf(cellTarget);
           const defendingStat = defendingCardRef[0].pokemonCard.stats[defendingStatIndex];
-          const attackingStat = parseInt(attackingPokemonCardAttributes['data-stats'].value.split(',')[index], 10);
+          const attackingStat = attackingPokemon.stats[index];
           const isPlayerCardAttacking = JSON.parse(attackingPokemonCardAttributes['data-is-player-card'].value)
 
           if (attackingStat > defendingStat && defendingCardRef[0].internalIsPlayerCard !== isPlayerCardAttacking) {
             defendingCardRef[0].toggleIsPlayerCard();
           }
+
         })
       });
     });
 
   }
 }
-
 </script>
+
+<style scoped>
+.grid-background {
+  background:
+    conic-gradient(from 90deg at 4px 4px, #0000 90deg, #a1a1aa 0) 0 0/250px 250px;
+}
+</style>

@@ -42,8 +42,10 @@ module.exports = {
           DEFAULT: '#B8B8A8',
           dark: '#989078'
         },
-        'default': {
-          DEFAULT: '#586161'
+        'theme': {
+          DEFAULT: '#e61919',
+          '100': '#c20a0a',
+          '200': '#901a22'
         }
       }
     },

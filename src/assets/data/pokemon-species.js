@@ -66,7 +66,6 @@ pokemon.data = {
     "pidgey": {
         "id": 16,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 251,
@@ -83,7 +82,6 @@ pokemon.data = {
     "spearow": {
         "id": 21,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 262,
@@ -285,7 +283,6 @@ pokemon.data = {
     "farfetchd": {
         "id": 83,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 377,
@@ -294,7 +291,6 @@ pokemon.data = {
     "doduo": {
         "id": 84,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 310,
@@ -681,7 +677,6 @@ pokemon.data = {
     "pidgeotto": {
         "id": 17,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 349,
@@ -690,7 +685,6 @@ pokemon.data = {
     "pidgeot": {
         "id": 18,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 479,
@@ -707,7 +701,6 @@ pokemon.data = {
     "fearow": {
         "id": 22,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 442,
@@ -806,7 +799,6 @@ pokemon.data = {
     "jigglypuff": {
         "id": 39,
         "types": [
-            "normal",
             "fairy"
         ],
         "stats": 270,
@@ -815,7 +807,6 @@ pokemon.data = {
     "wigglytuff": {
         "id": 40,
         "types": [
-            "normal",
             "fairy"
         ],
         "stats": 435,
@@ -1029,7 +1020,6 @@ pokemon.data = {
     "dodrio": {
         "id": 85,
         "types": [
-            "normal",
             "flying"
         ],
         "stats": 470,

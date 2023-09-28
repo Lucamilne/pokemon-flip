@@ -1,12 +1,26 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <RouterView />
+  <header class="h-24 bg-theme" />
+  <main class="h-[calc(100vh-192px)]">
+    <RouterView />
+  </main>
+  <footer class="h-24 bg-theme" />
 </template>
 
 <style>
+header {
+  box-shadow: inset 0 -8px #901a22, inset 0 -16px #c20a0a;
+  border-bottom: 8px solid #000;
+}
+
+footer {
+  box-shadow: inset 0 8px #901a22, inset 0 16px #c20a0a;
+  border-top: 8px solid #000;
+}
+
 .fire {
   @apply bg-fire;
 }
@@ -92,6 +106,6 @@ import { RouterLink, RouterView } from 'vue-router'
 }
 
 .text-shadow {
-  text-shadow: 1px 1px #586161;
+  text-shadow: 1px 1px #000;
 }
 </style>
