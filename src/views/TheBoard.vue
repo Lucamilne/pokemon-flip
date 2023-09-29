@@ -152,7 +152,7 @@ export default {
         return [input];
       }
     },
-    determineStatModifiers(attackingPokemon, indexOfAttackingPokemon, cell) {
+    determineElementalTileStatModifiers(attackingPokemon, indexOfAttackingPokemon, cell) {
       if (attackingPokemon.types.some(type => type === 'normal')) {
         return; // normal pokemon are not effected by elemental tiles
       }
@@ -168,6 +168,9 @@ export default {
       };
 
       this.cardsToDeal[indexOfAttackingPokemon].stats = stats.map(updateStatOnElementalTile);
+    },
+    sumUpNumbersInArray(array) {
+      return array.reduce((acc, val) => acc + val, 0);
     }
   },
   mounted() {
@@ -215,11 +218,25 @@ export default {
       droppable.on("drag:stop", () => {
         // most of the calculations on card placement are done here
         const attackingPokemonName = attackingPokemonCardAttributes['data-name'].value;
+        const attackingCardRef = this.$refs[attackingPokemonName][0];
         this.cells[cellTarget].pokemonCardRef = attackingPokemonName; // declare the attacking card
         const indexOfAttackingPokemon = this.cardsToDeal.findIndex(pokemon => pokemon.name === attackingPokemonName);
         const attackingPokemon = this.cardsToDeal[indexOfAttackingPokemon];
 
-        this.determineStatModifiers(attackingPokemon, indexOfAttackingPokemon, this.cells[cellTarget]); // add or remove stats on placement of attacking card
+        attackingCardRef.dropCard(); // triggers animation to place the card into the grid cell
+
+        if (this.cells[cellTarget].element) {
+          this.determineElementalTileStatModifiers(attackingPokemon, indexOfAttackingPokemon, this.cells[cellTarget]); // add or remove stats on placement of attacking card on elemental tile
+
+          const totalStats = this.sumUpNumbersInArray(attackingCardRef.pokemonCard.stats);
+          const totalOriginalStats = this.sumUpNumbersInArray(attackingCardRef.pokemonCard.originalStats);
+
+          if (totalStats < totalOriginalStats) {
+            attackingCardRef.weakenCard();
+          } else if (totalStats > totalOriginalStats) {
+            attackingCardRef.strengthenCard();
+          }
+        }
 
         this.cells[cellTarget].adjacentCells.forEach((cell, index) => {
           if (!cell || !this.cells[cell].pokemonCardRef) {
@@ -243,10 +260,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.grid-background {
-  background:
-    conic-gradient(from 90deg at 4px 4px, #0000 90deg, #a1a1aa 0) 0 0/250px 250px;
-}
-</style>

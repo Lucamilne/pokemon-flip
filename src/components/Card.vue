@@ -1,13 +1,16 @@
 <template>
     <div class="relative card" :data-is-player-card="internalIsPlayerCard" ref="card">
-        <div ref="cardFront" class="border-front rounded-md p-3 select-none aspect-square shadow" :class="{ 'card-shown': isFlipped, 'card-hidden': !isFlipped }">
+        <div ref="cardFront" class="border-front rounded-md p-3 select-none aspect-square shadow-lg" :class="{ 'card-shown': isFlipped, 'card-hidden': !isFlipped }">
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-black`">
+                <div :class="`absolute top-0 left-0 w-full h-full radial-type-accent ${bgColorByType[pokemonCard.types[0]]}`">
+                </div>
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
                     <ElementalTypes class="m-1.5 absolute top-0 right-0" :types="pokemonCard.types" />
-                    <img class="mt-4" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`" />
+                    <img class="mt-8" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`" />
                     <div :class="`text-xs truncate text-white text-center w-full py-0.5 absolute bottom-0 uppercase text-shadow`">
                         {{ pokemonCard.name }}
                     </div>
+                    <!-- <img src="../assets/icons/tiers/Bag_Poké_Ball_Sprite.png" /> -->
                 </div>
                 <Stats class="absolute top-0 left-0 mt-0.5" :stats="pokemonCard.stats" :original-stats="pokemonCard.originalStats" />
             </div>
@@ -32,11 +35,30 @@ export default {
     },
     components: {
         Stats,
-        ElementalTypes
+        ElementalTypes,
     },
     data: () => ({
         internalIsPlayerCard: null,
         isFlipped: false,
+        bgColorByType: {
+            bug: 'bg-bug',
+            dragon: 'bg-dragon',
+            electric: 'bg-electric',
+            fairy: 'bg-fairy',
+            fighting: 'bg-fighting',
+            fire: 'bg-fire',
+            flying: 'bg-flying',
+            ghost: 'bg-ghost',
+            grass: 'bg-grass',
+            ground: 'bg-ground',
+            ice: 'bg-ice',
+            normal: 'bg-normal',
+            poison: 'bg-poison',
+            psychic: 'bg-psychic',
+            rock: 'bg-rock',
+            steel: 'bg-steel',
+            water: 'bg-water',
+        }
     }),
     watch: {
         isPlayerCard: {
@@ -48,18 +70,30 @@ export default {
     },
     computed: {
         bgGradient() {
-            return this.internalIsPlayerCard ? 'bg-gradient-to-br from-water to-water-dark' : 'bg-gradient-to-br from-fighting to-fighting-dark';
+            return this.internalIsPlayerCard ? 'bg-gradient-to-br from-theme-blue to-theme-blue-100' : 'bg-gradient-to-br from-theme-red to-theme-red-100';
         },
+        typeColor() {
+            return `bg-${this.pokemonCard.types[0]}`
+        }
     },
     methods: {
         toggleIsPlayerCard() {
-            // this.$refs.card.classList.add('rotate');
+            // this.$refs.card.classList.add('rotate-diagonal-1');
 
             // setTimeout(() => {
-            //     this.$refs.card.classList.remove('rotate');
+            //     this.$refs.card.classList.remove('rotate-diagonal-1');
             // }, 500);
 
             this.internalIsPlayerCard = !this.internalIsPlayerCard;
+        },
+        dropCard() {
+            this.$refs.card.classList.add('slide-in-bck-top');
+        },
+        weakenCard() {
+            this.$refs.card.classList.add('wobble-hor-bottom');
+        },
+        strengthenCard() {
+            this.$refs.card.classList.add('jello-horizontal');
         },
         flipCard() {
             this.isFlipped = !this.isFlipped;
@@ -77,11 +111,16 @@ export default {
 
 <style scoped>
 .border-front {
-    @apply bg-gradient-to-br from-yellow-500 to-yellow-600;
+    @apply bg-gradient-to-br from-yellow-400 to-yellow-600;
 }
 
 .border-back {
-    @apply bg-gradient-to-br from-blue-500 to-blue-600;
+    @apply bg-gradient-to-br from-blue-400 to-blue-600;
+}
+
+.radial-type-accent {
+    /* background: radial-gradient(circle at 50% 50%, rgb(240, 147, 43) 50%, transparent 50%); */
+    clip-path: circle(62% at 50% 100%);
 }
 
 .card-hidden {
@@ -99,5 +138,201 @@ export default {
     transition-property: transform, opacity;
     transition-duration: 500ms;
     transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.27);
+}
+
+.slide-in-bck-top {
+    -webkit-animation: slide-in-bck-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    animation: slide-in-bck-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+}
+
+.wobble-hor-bottom {
+    -webkit-animation: wobble-hor-bottom 0.5s both;
+    animation: wobble-hor-bottom 0.5s both;
+}
+
+.jello-horizontal {
+    -webkit-animation: jello-horizontal 0.9s both;
+    animation: jello-horizontal 0.9s both;
+}
+
+.rotate-diagonal-1 {
+    -webkit-animation: rotate-diagonal-1 0.4s linear both;
+    animation: rotate-diagonal-1 0.4s linear both;
+}
+
+/* slide in */
+@-webkit-keyframes slide-in-bck-top {
+    0% {
+        -webkit-transform: translateZ(700px) translateY(-150px);
+        transform: translateZ(700px) translateY(-150px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateZ(0) translateY(0);
+        transform: translateZ(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-bck-top {
+    0% {
+        -webkit-transform: translateZ(700px) translateY(-150px);
+        transform: translateZ(700px) translateY(-150px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateZ(0) translateY(0);
+        transform: translateZ(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* defeated */
+@-webkit-keyframes rotate-diagonal-1 {
+    0% {
+        -webkit-transform: rotate3d(1, 1, 0, 0deg);
+        transform: rotate3d(1, 1, 0, 0deg);
+    }
+
+    50% {
+        -webkit-transform: rotate3d(1, 1, 0, -180deg);
+        transform: rotate3d(1, 1, 0, -180deg);
+    }
+
+    100% {
+        -webkit-transform: rotate3d(1, 1, 0, -360deg);
+        transform: rotate3d(1, 1, 0, -360deg);
+    }
+}
+
+@keyframes rotate-diagonal-1 {
+    0% {
+        -webkit-transform: rotate3d(1, 1, 0, 0deg);
+        transform: rotate3d(1, 1, 0, 0deg);
+    }
+
+    50% {
+        -webkit-transform: rotate3d(1, 1, 0, -180deg);
+        transform: rotate3d(1, 1, 0, -180deg);
+    }
+
+    100% {
+        -webkit-transform: rotate3d(1, 1, 0, -360deg);
+        transform: rotate3d(1, 1, 0, -360deg);
+    }
+}
+
+/* weaken */
+@keyframes wobble-hor-bottom {
+
+    0%,
+    100% {
+        -webkit-transform: translateX(0%);
+        transform: translateX(0%);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+
+    15% {
+        -webkit-transform: translateX(-30px) rotate(-6deg);
+        transform: translateX(-30px) rotate(-6deg);
+    }
+
+    30% {
+        -webkit-transform: translateX(15px) rotate(6deg);
+        transform: translateX(15px) rotate(6deg);
+    }
+
+    45% {
+        -webkit-transform: translateX(-15px) rotate(-3.6deg);
+        transform: translateX(-15px) rotate(-3.6deg);
+    }
+
+    60% {
+        -webkit-transform: translateX(9px) rotate(2.4deg);
+        transform: translateX(9px) rotate(2.4deg);
+    }
+
+    75% {
+        -webkit-transform: translateX(-6px) rotate(-1.2deg);
+        transform: translateX(-6px) rotate(-1.2deg);
+    }
+}
+
+/* strengthen */
+@-webkit-keyframes jello-horizontal {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes jello-horizontal {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
 }
 </style>
