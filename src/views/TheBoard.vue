@@ -223,8 +223,6 @@ export default {
         const indexOfAttackingPokemon = this.cardsToDeal.findIndex(pokemon => pokemon.name === attackingPokemonName);
         const attackingPokemon = this.cardsToDeal[indexOfAttackingPokemon];
 
-        attackingCardRef.dropCard(); // triggers animation to place the card into the grid cell
-
         if (this.cells[cellTarget].element) {
           this.determineElementalTileStatModifiers(attackingPokemon, indexOfAttackingPokemon, this.cells[cellTarget]); // add or remove stats on placement of attacking card on elemental tile
 

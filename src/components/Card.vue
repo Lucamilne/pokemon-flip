@@ -1,14 +1,15 @@
 <template>
-    <div class="relative card" :data-is-player-card="internalIsPlayerCard" ref="card">
-        <div ref="cardFront" class="border-front rounded-md p-3 select-none aspect-square shadow-lg" :class="{ 'card-shown': isFlipped, 'card-hidden': !isFlipped }">
+    <div class="relative select-none card" :data-is-player-card="internalIsPlayerCard" ref="card">
+        <div ref="cardFront" class="p-3 border-front rounded-md aspect-square" :class="{ 'card-shown': isFlipped, 'card-hidden': !isFlipped }">
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-black`">
-                <div :class="`absolute top-0 left-0 w-full h-full radial-type-accent ${bgColorByType[pokemonCard.types[0]]}`">
-                </div>
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
-                    <ElementalTypes class="m-1.5 absolute top-0 right-0" :types="pokemonCard.types" />
-                    <img class="mt-8" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`" />
-                    <div :class="`text-xs truncate text-white text-center w-full py-0.5 absolute bottom-0 uppercase text-shadow`">
-                        {{ pokemonCard.name }}
+                    <ElementalTypes class="absolute top-1 right-1" :types="pokemonCard.types" />
+                    <img class="mt-4" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`" />
+                    <div :class="`rounded-full text-xs truncate text-white text-center w-full py-0.5 absolute bottom-0 uppercase text-shadow`">
+                        <!-- <div v-if="pokemonCard.types.length > 1" :class="`absolute top-0 left-0 w-full h-full dual-type-accent-a ${bgColorByType[pokemonCard.types[0]]}`" />
+                        <div v-if="pokemonCard.types.length > 1" :class="`absolute top-0 left-0 w-full h-full dual-type-accent-b ${bgColorByType[pokemonCard.types[1]]}`" />
+                        <div v-else :class="`absolute top-0 left-0 w-full h-full ${bgColorByType[pokemonCard.types[0]]}`" /> -->
+                        <span>{{ pokemonCard.name }}</span>
                     </div>
                     <!-- <img src="../assets/icons/tiers/Bag_Poké_Ball_Sprite.png" /> -->
                 </div>
@@ -118,9 +119,12 @@ export default {
     @apply bg-gradient-to-br from-blue-400 to-blue-600;
 }
 
-.radial-type-accent {
-    /* background: radial-gradient(circle at 50% 50%, rgb(240, 147, 43) 50%, transparent 50%); */
-    clip-path: circle(62% at 50% 100%);
+.dual-type-accent-a {
+    clip-path: polygon(0 0, 62% 0, 38% 100%, 0% 100%);
+}
+
+.dual-type-accent-b {
+    clip-path: polygon(62% 0, 100% 0, 100% 100%, 38% 100%);
 }
 
 .card-hidden {
