@@ -1,12 +1,12 @@
 <template>
-  <section class="flex justify-between items-center grid-background bg-center bg-cover">
-    <div class="grid grid-cols-1 gap-2 cells">
+  <section class="h-full flex justify-center items-center grid-background bg-center bg-cover">
+    <div class="grid grid-cols-3 gap-2 cells bg-lime-500 border-black border-4 border-r-0 h-1/2">
       <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[0]">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
-    <Grid class="basis-1/3" :cells="cells" ref="grid" />
-    <div class="grid grid-cols-1 gap-2 cells">
+    <Grid class="basis-1/3 aspect-square" :cells="cells" ref="grid" />
+    <div class="grid grid-cols-3 gap-2 cells bg-lime-500 border-black border-4 border-l-0 h-1/2">
       <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[1]">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
@@ -206,7 +206,7 @@ export default {
       })
 
       droppable.on("droppable:dropped", (event) => {
-        if (!event.data.dropzone.attributes['data-cell']) {
+        if (event.data.dropzone.attributes['data-cell'] === undefined) { //this isn't working todo
           event.cancel();
           return;
         }
@@ -258,3 +258,18 @@ export default {
   }
 }
 </script>
+
+<style>
+.hand {
+  background-image:
+    linear-gradient(45deg, lime 25%, transparent 25%),
+    linear-gradient(135deg, lime 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, lime 75%),
+    linear-gradient(135deg, transparent 75%, lime 75%);
+  background-size: 40px 40px;
+  background-color: yellowgreen;
+  /* Must be a square */
+  background-position: 0 0, 20px 0, 20px -20px, 0px 20px;
+  /* Must be half of one side of the square */
+}
+</style>
