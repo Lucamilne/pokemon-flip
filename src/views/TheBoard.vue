@@ -28,6 +28,7 @@ export default {
   },
   data: () => ({
     cardsToDeal: [],
+    cellsOccupied: 0,
     statModifier: 20,
     cells: {
       A1: {
@@ -214,9 +215,8 @@ export default {
       });
 
       droppable.on("droppable:dropped", (event) => {
-        console.log(event)
         if (event.dropzone.dataset.dropzone === 'playerHand' || event.dropzone.dataset.dropzone === 'opponentHand') {
-          event.cancel();
+          event.cancel(); // direct user to the grid
           return;
         }
 
@@ -228,8 +228,11 @@ export default {
         attackingPokemonCardAttributes = event.data.dragEvent.data.source.attributes;
       });
 
-      droppable.on("drag:stop", (event) => {
-        // do a blocking check here to see that a child node IS a card.
+      droppable.on("drag:stop", () => {
+        if (this.$refs.grid.$refs[cellTarget][0].children.length < 1) {
+          return; // prevents a bug that causes a cellTarget to be defined on droppable:dropped, but a user returns their card to hand
+        }
+
         const attackingPokemonName = attackingPokemonCardAttributes["data-name"].value;
         const attackingCardRef = this.$refs[attackingPokemonName][0];
         this.cells[cellTarget].pokemonCardRef = attackingPokemonName; // declare the attacking card
@@ -277,6 +280,8 @@ export default {
             defendingCardRef[0].toggleIsPlayerCard();
           }
         });
+
+        cellsOccupied++
       });
     });
   },
