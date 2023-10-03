@@ -229,7 +229,11 @@ export default {
       });
 
       droppable.on("drag:stop", () => {
-        if (this.$refs.grid.$refs[cellTarget][0].children.length < 1) {
+        const htmlCollection = this.$refs.grid.$refs[cellTarget][0].children;
+        const arrayOfElements = Array.from(htmlCollection);
+        const hasCardClass = arrayOfElements.some(element => element.className.includes('card'));
+        
+        if (!hasCardClass) {
           return; // prevents a bug that causes a cellTarget to be defined on droppable:dropped, but a user returns their card to hand
         }
 
@@ -281,7 +285,7 @@ export default {
           }
         });
 
-        cellsOccupied++
+        this.cellsOccupied++
       });
     });
   },
