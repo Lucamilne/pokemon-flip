@@ -24,7 +24,12 @@ footer {
 }
 
 .text-shadow {
-  text-shadow: 1px 1px #000;
+ text-shadow: -1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000;
+}
+
+.text-highlight {
+  text-shadow: -1px 0 #fff,0 1px #fff,1px 0 #fff,0 -1px #fff;
+
 }
 
 .simple-container {

@@ -9,7 +9,7 @@
                         <!-- <div v-if="pokemonCard.types.length > 1" :class="`absolute top-0 left-0 w-full h-full dual-type-accent-a ${bgColorByType[pokemonCard.types[0]]}`" />
                         <div v-if="pokemonCard.types.length > 1" :class="`absolute top-0 left-0 w-full h-full dual-type-accent-b ${bgColorByType[pokemonCard.types[1]]}`" />
                         <div v-else :class="`absolute top-0 left-0 w-full h-full ${bgColorByType[pokemonCard.types[0]]}`" /> -->
-                        <span>{{ pokemonCard.name }}</span>
+                        <span :class="rarity">{{ pokemonCard.name }}</span>
                     </div>
                     <!-- <img src="../assets/icons/tiers/Bag_Poké_Ball_Sprite.png" /> -->
                 </div>
@@ -75,16 +75,32 @@ export default {
         },
         typeColor() {
             return `bg-${this.pokemonCard.types[0]}`
+        },
+        rarity() {
+            const stats = this.pokemonCard.stats;
+            const statsSum = stats.reduce((acc, cur) => acc + cur, 0);
+
+            if (stats.some((stat) => stat === 10)) {
+                return 'text-yellow-500';
+            }
+
+            if (statsSum > 26) {
+                return 'text-voilet-500 text-highlight';
+            }
+
+            if (statsSum > 22) {
+                return 'text-blue-500 text-highlight';
+
+            }
+            if (statsSum > 18) {
+                return 'text-green-500';
+            }
+
+            return 'text-white';
         }
     },
     methods: {
         toggleIsPlayerCard() {
-            // this.$refs.card.classList.add('rotate-diagonal-1');
-
-            // setTimeout(() => {
-            //     this.$refs.card.classList.remove('rotate-diagonal-1');
-            // }, 500);
-
             this.internalIsPlayerCard = !this.internalIsPlayerCard;
         },
         dropCard() {
