@@ -1,12 +1,12 @@
 <template>
-  <section class="h-full md:flex justify-between items-center grid-background bg-center bg-cover">
-    <div class="grid grid-cols-3 gap-2 cells simple-container p-2">
+  <section class="mx-12 h-full md:flex justify-between items-center grid-background bg-center bg-cover">
+    <div class="grid grid-cols-2 gap-2 cells simple-container p-2">
       <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[0]" data-dropzone="playerHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
     <Grid class="md:basis-1/3 aspect-square" :cells="cells" ref="grid" />
-    <div class="grid grid-cols-3 gap-2 cells simple-container p-2">
+    <div class="grid grid-cols-2 gap-4 cells simple-container p-2">
       <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[1]" data-dropzone="opponentHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>

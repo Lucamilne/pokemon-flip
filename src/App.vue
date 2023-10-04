@@ -13,11 +13,6 @@ import { RouterView } from 'vue-router'
 
 
 <style>
-body {
-  background:
-    conic-gradient(from 90deg at 4px 4px, #0000 90deg, #a1a1aa 0) 0 0/250px 250px;
-}
-
 header {
   box-shadow: inset 0 -8px #901a22, inset 0 -16px #c20a0a;
   border-bottom: 8px solid #000;
@@ -33,7 +28,7 @@ footer {
 }
 
 .simple-container {
-  border-width: 30px; /* Fallback border style */
+  border-width: 24px; /* Fallback border style */
   border-image-source: url('./assets/textures/Frame_simple.png');
   border-image-slice: 16 16 16 16;
   background: url('./assets/textures/content_simple.png');
