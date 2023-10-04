@@ -251,6 +251,7 @@ module.exports = {
         },
         'theme-red': {
           DEFAULT: '#e61919',
+          '50': '#f93a3a',
           '100': '#c20a0a',
           '200': '#901a22'
         }

@@ -10,6 +10,8 @@ import { RouterView } from 'vue-router'
   <footer class="h-24 bg-theme-red" />
 </template>
 
+
+
 <style>
 body {
   background:
@@ -28,5 +30,12 @@ footer {
 
 .text-shadow {
   text-shadow: 1px 1px #000;
+}
+
+.simple-container {
+  border-width: 30px; /* Fallback border style */
+  border-image-source: url('./assets/textures/Frame_simple.png');
+  border-image-slice: 16 16 16 16;
+  background: url('./assets/textures/content_simple.png');
 }
 </style>

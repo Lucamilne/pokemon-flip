@@ -1,12 +1,12 @@
 <template>
   <section class="h-full md:flex justify-between items-center grid-background bg-center bg-cover">
-    <div class="grid grid-cols-3 gap-2 cells bg-lime-500 border-black border-4 border-r-0 h-1/2">
+    <div class="grid grid-cols-3 gap-2 cells simple-container p-2">
       <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[0]" data-dropzone="playerHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
     <Grid class="md:basis-1/3 aspect-square" :cells="cells" ref="grid" />
-    <div class="grid grid-cols-3 gap-2 cells bg-lime-500 border-black border-4 border-l-0 h-1/2">
+    <div class="grid grid-cols-3 gap-2 cells simple-container p-2">
       <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[1]" data-dropzone="opponentHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
@@ -15,16 +15,18 @@
 </template>
 
 <script>
-import Grid from "../components/Grid.vue";
 import pokemon from "@/assets/data/pokemon-species.js";
 import { Plugins, Droppable } from "@shopify/draggable";
+import Grid from "../components/Grid.vue";
 import Card from "../components/Card.vue";
+import Loading from "../components/Loading.vue";
 
 export default {
   name: "TheBoard",
   components: {
     Grid,
     Card,
+    Loading
   },
   data: () => ({
     cardsToDeal: [],
@@ -147,11 +149,7 @@ export default {
       return statsToReturn;
     },
     commaSeparatedStringToArray(input) {
-      if (typeof input === "string") {
-        return input.split(",").map((item) => item.trim());
-      } else {
-        return [input];
-      }
+      return typeof input === "string" ? input.split(",").map(item => item.trim()) : [input];
     },
     determineElementalTileStatModifiers(attackingPokemon, indexOfAttackingPokemon, cell) {
       if (attackingPokemon.types.some((type) => type === "normal")) {
@@ -202,7 +200,6 @@ export default {
       });
 
       let attackingPokemonCardAttributes;
-      let droppableOrigin;
       let cellTarget;
 
       droppable.on("drag:start", (event) => {
@@ -210,8 +207,6 @@ export default {
           event.cancel();
           return
         }
-
-        droppableOrigin = event.originalSource.parentNode.dataset.dropzone;
       });
 
       droppable.on("droppable:dropped", (event) => {
@@ -232,7 +227,7 @@ export default {
         const htmlCollection = this.$refs.grid.$refs[cellTarget][0].children;
         const arrayOfElements = Array.from(htmlCollection);
         const hasCardClass = arrayOfElements.some(element => element.className.includes('card'));
-        
+
         if (!hasCardClass) {
           return; // prevents a bug that causes a cellTarget to be defined on droppable:dropped, but a user returns their card to hand
         }
@@ -285,23 +280,9 @@ export default {
           }
         });
 
-        this.cellsOccupied++
+        this.cellsOccupied++ // tracking game progress
       });
     });
   },
 };
 </script>
-
-<style>
-.hand {
-  background-image: linear-gradient(45deg, lime 25%, transparent 25%),
-    linear-gradient(135deg, lime 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, lime 75%),
-    linear-gradient(135deg, transparent 75%, lime 75%);
-  background-size: 40px 40px;
-  background-color: yellowgreen;
-  /* Must be a square */
-  background-position: 0 0, 20px 0, 20px -20px, 0px 20px;
-  /* Must be half of one side of the square */
-}
-</style>
