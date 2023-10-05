@@ -1,13 +1,15 @@
 <template>
-  <section class="p-12 h-full md:flex justify-between items-center">
-    <div class="grid grid-cols-2 gap-2 cells simple-container p-2">
-      <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[0]" data-dropzone="playerHand">
+  <section class="p-12 border border-8 border-zinc-300 h-full md:flex justify-between items-center">
+    <div class="grid grid-cols-2 gap-4 cells simple-container p-2">
+      <div class="dropzone aspect-square bg-zinc-300 rounded-md md:w-44" v-for="(pokemonCard, index) in dealCards[0]" data-dropzone="playerHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
+      </div>
+      <div class="aspect-square bg-zinc-300 rounded-md md:w-44">
       </div>
     </div>
     <Grid class="md:basis-1/3 aspect-square" :cells="cells" ref="grid" />
     <div class="grid grid-cols-2 gap-4 cells simple-container p-2">
-      <div class="dropzone aspect-square w-36" v-for="(pokemonCard, index) in dealCards[1]" data-dropzone="opponentHand">
+      <div class="dropzone aspect-square bg-zinc-300 rounded-md md:w-44" v-for="(pokemonCard, index) in dealCards[1]" data-dropzone="opponentHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
     </div>
@@ -100,12 +102,27 @@ export default {
 
       const createCard = (pokemonName) => {
         const stats = this.allocateStatsByPokemon(pokemonName);
+        const statsSum = stats.reduce((acc, cur) => acc + cur, 0);
+        let rarity = 'common';
+
+        if (statsSum >= 30) {
+          rarity = 'legendary';
+        } else if (statsSum >= 26) {
+          rarity = 'epic';
+        } else if (statsSum >= 22) {
+          rarity = 'rare';
+        } else if (statsSum >= 18) {
+          rarity = 'uncommon';
+        }
+
         return {
           name: pokemonName,
           types: pokemon.data[pokemonName].types,
           id: pokemon.data[pokemonName].id,
           stats: stats,
           originalStats: stats, // A copy of stats is kept to track modifications
+          rarity: rarity,
+          playerOwned: false // this is an unimplemented feature as of writing
         };
       };
 

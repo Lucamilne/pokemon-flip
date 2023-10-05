@@ -4,22 +4,19 @@
             <div :class="`${bgGradient} relative w-full aspect-square border border-1 border-black`">
                 <div class="relative h-full flex flex-col items-center justify-center shadow-inner">
                     <ElementalTypes class="absolute top-1 right-1" :types="pokemonCard.types" />
-                    <img class="mt-4" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`" />
-                    <div :class="`rounded-full text-xs truncate text-white text-center w-full py-0.5 absolute bottom-0 uppercase text-shadow`">
-                        <!-- <div v-if="pokemonCard.types.length > 1" :class="`absolute top-0 left-0 w-full h-full dual-type-accent-a ${bgColorByType[pokemonCard.types[0]]}`" />
-                        <div v-if="pokemonCard.types.length > 1" :class="`absolute top-0 left-0 w-full h-full dual-type-accent-b ${bgColorByType[pokemonCard.types[1]]}`" />
-                        <div v-else :class="`absolute top-0 left-0 w-full h-full ${bgColorByType[pokemonCard.types[0]]}`" /> -->
-                        <span :class="rarity">{{ pokemonCard.name }}</span>
+                    <img class="mt-2 z-10" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`" />
+                    <div :class="`text-xs truncate text-white text-center w-full pt-0.5 absolute bottom-0 drop-shadow uppercase text-shadow ${pokemonCard.rarity}`">
+                        <span>{{ pokemonCard.name }}</span>
                     </div>
-                    <!-- <img src="../assets/icons/tiers/Bag_Poké_Ball_Sprite.png" /> -->
                 </div>
-                <Stats class="absolute top-0 left-0 mt-0.5" :stats="pokemonCard.stats" :original-stats="pokemonCard.originalStats" />
+                <Stats class="absolute top-0 left-0 mt-0.5 z-20" :stats="pokemonCard.stats" :original-stats="pokemonCard.originalStats" />
             </div>
         </div>
         <div ref="cardBack" class="border-back absolute top-0 left-0 w-full h-full rounded-md p-3 select-none aspect-square shadow" :class="{ 'card-shown': !isFlipped, 'card-hidden': isFlipped }">
             <div class="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
             </div>
         </div>
+        <img v-if="pokemonCard.playerOwned" class="absolute bottom-0 right-0" src="../assets/icons/tiers/Bag_Poké_Ball_Sprite.png" />
     </div>
 </template>
 
@@ -76,28 +73,6 @@ export default {
         typeColor() {
             return `bg-${this.pokemonCard.types[0]}`
         },
-        rarity() {
-            const stats = this.pokemonCard.stats;
-            const statsSum = stats.reduce((acc, cur) => acc + cur, 0);
-
-            if (stats.some((stat) => stat === 10)) {
-                return 'text-yellow-500';
-            }
-
-            if (statsSum > 26) {
-                return 'text-voilet-500 text-highlight';
-            }
-
-            if (statsSum > 22) {
-                return 'text-blue-500 text-highlight';
-
-            }
-            if (statsSum > 18) {
-                return 'text-green-500';
-            }
-
-            return 'text-white';
-        }
     },
     methods: {
         toggleIsPlayerCard() {
@@ -127,6 +102,22 @@ export default {
 </script>
 
 <style scoped>
+.uncommon {
+    @apply bg-green-500 border-t border-black;
+}
+
+.rare {
+    @apply bg-blue-500 border-t border-black;
+}
+
+.epic {
+    @apply bg-violet-500 border-t border-black;
+}
+
+.legendary {
+    @apply bg-yellow-500 border-t border-black;
+}
+
 .border-front {
     @apply bg-gradient-to-br from-yellow-400 to-yellow-600;
 }

@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="text-xs md:text-sm text-shadow flex flex-col justify-between aspect-square text-center">
+        <div class="text-xs text-shadow flex flex-col justify-between aspect-square text-center">
             <div :class="conditionalClass(1)">{{ formattedStats[1] }}</div>
             <div class="flex justify-between">
                 <div :class="`w-6 ${conditionalClass(0)}`">{{ formattedStats[0] }}</div>
