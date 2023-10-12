@@ -8,7 +8,7 @@
             </div>
             <div class="pokeball-bottom w-full h-full bg-white">
             </div>
-            <div class="bg-white surround rounded-full flex justify-center items-center" :class="{ 'fade-out': isOpen }">
+            <div class="bg-white surround rounded-full flex justify-center items-center">
                 <button class="pokeball-button bg-white rounded-full" @click.stop="isOpen = true">
 
                 </button>
@@ -50,13 +50,7 @@ export default {
 }
 
 .open-right {
-    transform: translateX(100%);
-}
-
-.fade-out {
-    transition: opacity 250ms ease;
-    transition-delay: 400ms;
-    opacity: 0;
+    transform: translateX(calc(100% + 9rem));
 }
 
 .surround {
