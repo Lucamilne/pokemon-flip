@@ -1,5 +1,5 @@
 <template>
-  <section class="p-12 border border-8 border-zinc-300 h-full md:flex justify-between items-center">
+  <section class="p-8 border border-8 border-zinc-300 h-full md:flex justify-between items-center">
     <div class="grid grid-cols-2 gap-4 cells simple-container p-2">
       <div class="dropzone aspect-square bg-zinc-300 rounded-md md:w-44" v-for="(pokemonCard, index) in dealCards[0]" data-dropzone="playerHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="true" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
@@ -7,12 +7,15 @@
       <div class="aspect-square bg-zinc-300 rounded-md md:w-44">
       </div>
     </div>
-    <Grid class="md:basis-1/3 aspect-square" :cells="cells" ref="grid" />
+    <Grid class="md:basis-1/3 aspect-square mx-8" :cells="cells" ref="grid" />
     <div class="grid grid-cols-2 gap-4 cells simple-container p-2">
       <div class="dropzone aspect-square bg-zinc-300 rounded-md md:w-44" v-for="(pokemonCard, index) in dealCards[1]" data-dropzone="opponentHand">
         <Card :pokemon-card="pokemonCard" :isPlayerCard="false" :index="index" :data-stats="pokemonCard.stats" :data-types="pokemonCard.types" :data-name="pokemonCard.name" :ref="pokemonCard.name" />
       </div>
+      <div class="aspect-square bg-zinc-300 rounded-md md:w-44">
+      </div>
     </div>
+    <Loading />
   </section>
 </template>
 
