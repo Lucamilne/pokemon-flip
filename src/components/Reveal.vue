@@ -51,8 +51,7 @@ export default {
 
 <style scoped>
 .pokeball-left {
-    /* box-shadow: inset -1.5rem 0px #901a22; */
-    box-shadow: inset -1.5rem 0 #901a22, inset -3rem 0 #c20a0a;
+    box-shadow: inset -1.5rem 0 #901a22;
 }
 
 .pokeball-right {
@@ -60,7 +59,7 @@ export default {
 }
 
 .pokeball-top {
-    box-shadow: inset 0 -1.5rem #901a22, inset 0 -3rem #c20a0a;
+    box-shadow: inset 0 -1.5rem #901a22;
     height: calc(50vh - 3rem);
 }
 
