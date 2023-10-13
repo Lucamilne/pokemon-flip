@@ -15,7 +15,7 @@
       <div class="aspect-square bg-zinc-300 rounded-md md:w-44">
       </div>
     </div>
-    <Loading />
+    <Reveal />
   </section>
 </template>
 
@@ -24,14 +24,14 @@ import pokemon from "@/assets/data/pokemon-species.js";
 import { Plugins, Droppable } from "@shopify/draggable";
 import Grid from "../components/Grid.vue";
 import Card from "../components/Card.vue";
-import Loading from "../components/Loading.vue";
+import Reveal from "../components/Reveal.vue";
 
 export default {
   name: "TheBoard",
   components: {
     Grid,
     Card,
-    Loading
+    Reveal
   },
   data: () => ({
     cardsToDeal: [],
