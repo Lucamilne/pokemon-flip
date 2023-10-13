@@ -4,7 +4,7 @@
         <div class="pokeball-right basis-1/2 h-full flex relative" :class="{ 'open-right': isOpen }">
             <div class="bg-black w-36 h-full">
             </div>
-            <div class="bg-white w-full h-full bg-white">
+            <div class="bg-white shadow-left w-full h-full bg-white">
             </div>
             <div class="bg-white surround rounded-full flex justify-center items-center">
                 <button class="pokeball-button bg-white rounded-full" @click.stop="openPokeball">
@@ -18,7 +18,7 @@
         <div class="pokeball-bottom flex flex-col relative" :class="{ 'open-down': isOpen }">
             <div class="bg-black h-24 w-full">
             </div>
-            <div class="bg-white h-full"></div>
+            <div class="bg-zinc-200 shadow-top h-full"></div>
             <div class="bg-white surround-mobile rounded-full flex justify-center items-center">
                 <button class="pokeball-button bg-white rounded-full" @click.stop="openPokeball">
                 </button>
@@ -51,7 +51,8 @@ export default {
 
 <style scoped>
 .pokeball-left {
-    box-shadow: inset -1.5rem 0px #901a22;
+    /* box-shadow: inset -1.5rem 0px #901a22; */
+    box-shadow: inset -1.5rem 0 #901a22, inset -3rem 0 #c20a0a;
 }
 
 .pokeball-right {
@@ -59,12 +60,11 @@ export default {
 }
 
 .pokeball-top {
-    box-shadow: inset 0 -1.5rem #901a22;
+    box-shadow: inset 0 -1.5rem #901a22, inset 0 -3rem #c20a0a;
     height: calc(50vh - 3rem);
 }
 
 .pokeball-bottom {
-    /* box-shadow: inset 0 1.5rem #d4d4d8; */
     height: calc(50vh + 3rem);
 }
 
@@ -74,6 +74,14 @@ export default {
 .pokeball-bottom {
     transform: translate(0%);
     transition: transform 400ms ease;
+}
+
+.shadow-left {
+    box-shadow: inset 1.5rem 0 #d4d4d8;
+}
+
+.shadow-top {
+    box-shadow: inset 0 1.5rem 0 #d4d4d8;
 }
 
 .open-left {
@@ -128,4 +136,5 @@ export default {
     height: 10rem;
     border: 0.5rem solid black;
     box-shadow: inset -0.5rem -0.5rem 0 0 #d4d4d8;
-}</style>
+}
+</style>
